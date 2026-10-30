@@ -1,0 +1,26 @@
+{
+  "id": "f3s_a",
+  "title": "The Row of Ancestors",
+  "category": "deduction",
+  "difficulty": "medium_plus",
+  "steps": [
+    {
+      "prompt": "5 figures stand in a row of numbered pews, numbered 1 to 5 from the left: the Butler, the Cook, the Doctor, the Duke, the Heir. Use the clues, then answer: who stands in pew number 4? (Just the title, like Baron.)",
+      "answer_type": "text",
+      "answer": "doctor",
+      "clues": [
+        "The Heir is in an even-numbered pew.",
+        "The Butler is at one of the two ends of the row.",
+        "The Butler is somewhere to the left of the Duke.",
+        "The Duke is in an odd-numbered pew.",
+        "Exactly 0 pews separate the Duke from the Doctor.",
+        "The Doctor is somewhere between the Heir and the Duke."
+      ],
+      "placeholder": "a title",
+      "answers": [
+        "The Doctor"
+      ]
+    }
+  ],
+  "reveal_text": "The planchette slides to a number and stops: 5."
+}

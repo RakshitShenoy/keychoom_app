@@ -1,0 +1,112 @@
+{
+  "id": "floor8_study",
+  "floor": 8,
+  "title": "The Demon's Study",
+  "intro": "The last room before the final door. Black candles burn in a ring. A demon's contracts cover the desk and the safe under the pentagram holds the last fragment.",
+  "fragment": {
+    "id": "fragment_8",
+    "label": "Floor 8 Key Fragment",
+    "rune": "Y"
+  },
+  "vault": {
+    "label": "Pentagram Safe",
+    "length": 4,
+    "code": "J94R",
+    "requires": [
+      "c_desk"
+    ],
+    "position": {
+      "x": 84,
+      "y": 80
+    }
+  },
+  "objects": [
+    {
+      "id": "a_scroll",
+      "type": "puzzle",
+      "label": "Contract Scroll",
+      "icon": "📜",
+      "position": {
+        "x": 16,
+        "y": 74
+      },
+      "puzzle": "f8s_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_skull",
+      "type": "puzzle",
+      "label": "Obsidian Skull",
+      "icon": "💀",
+      "position": {
+        "x": 36,
+        "y": 24
+      },
+      "puzzle": "f8s_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_desk",
+      "type": "puzzle",
+      "label": "Devil's Desk",
+      "icon": "🪑",
+      "position": {
+        "x": 74,
+        "y": 48
+      },
+      "puzzle": "f8s_c",
+      "requires": [
+        "a_scroll",
+        "b_skull"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_mirror",
+      "type": "trap",
+      "label": "Black Mirror",
+      "icon": "🪞",
+      "position": {
+        "x": 54,
+        "y": 84
+      },
+      "requires": [],
+      "reward_text": "The black mirror ripples and a face rushes toward you."
+    }
+  ],
+  "hints": {
+    "a_scroll": [
+      "Fill in any tile where only one number can fit its row and column.",
+      "Work tile by tile: a missing number in a row cannot appear anywhere in the same column.",
+      "Row 1 starts with 12.",
+      "The code is 1243. The vault's character number 1 is J."
+    ],
+    "b_skull": [
+      "Try assuming the first speaker is a knight and follow what that forces. If you hit a contradiction, they are a knave.",
+      "A statement from a knave must be FALSE. Negate it to learn something certain.",
+      "There are exactly 1 knights.",
+      "The knights are Brynn. The code is B. The vault's character number 2 is 9."
+    ],
+    "c_desk": [
+      "The keyword is in your clue notes (from the Obsidian Skull). Write it repeatedly under DOAHMS.",
+      "Subtract the key letter's position from each message letter. The first key letter is B (= 1).",
+      "The decoded word has 6 letters and starts with C. For part 2 the letter total is 39.",
+      "The word is CANDLE. Part 2: 39 divided by P leaves 3. The vault's characters number 3 and 4 are 4 and R."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Contract Scroll, Obsidian Skull, Devil's Desk.",
+      "The code reads J94R."
+    ]
+  }
+}

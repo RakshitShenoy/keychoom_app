@@ -1,0 +1,15 @@
+{
+  "id": "f2k_a",
+  "title": "The Shifted Whisper",
+  "category": "cryptic",
+  "difficulty": "medium",
+  "steps": [
+    {
+      "prompt": "A note is written in a simple code. Every letter was moved 11 places FORWARD in the alphabet (after Z comes A). The note reads: MCZZXDETNV. What was the original word?",
+      "answer_type": "text",
+      "answer": "broomstick",
+      "placeholder": "the original word"
+    }
+  ],
+  "reveal_text": "The broth settles. A number floats up in the grease: 9."
+}

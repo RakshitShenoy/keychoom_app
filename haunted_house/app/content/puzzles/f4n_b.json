@@ -1,0 +1,25 @@
+{
+  "id": "f4n_b",
+  "title": "The Row of Ancestors",
+  "category": "deduction",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "6 figures stand in a row of numbered chairs, numbered 1 to 6 from the left: the Butler, the Doctor, the Duke, the Heir, the Priest, the Widow. Use the clues, then answer: who stands in chair number 1? (Just the title, like Baron.)",
+      "answer_type": "text",
+      "answer": "butler",
+      "clues": [
+        "The Duke is somewhere to the left of the Widow.",
+        "Exactly 4 chairs separate the Doctor from the Butler.",
+        "The Heir is somewhere to the left of the Doctor.",
+        "Exactly 0 chairs separate the Heir from the Butler.",
+        "The Duke is in an even-numbered chair."
+      ],
+      "placeholder": "a title",
+      "answers": [
+        "The Butler"
+      ]
+    }
+  ],
+  "reveal_text": "A number is carved under the saddle: 3."
+}

@@ -1,0 +1,101 @@
+{
+  "id": "floor1_cellar",
+  "floor": 1,
+  "title": "The Candle Cellar",
+  "intro": "The cellar door slams shut behind you. A single black candle flickers on a table. Somewhere in this room is the key to the first vault.",
+  "fragment": {
+    "id": "fragment_1",
+    "label": "Floor 1 Key Fragment",
+    "rune": "W"
+  },
+  "vault": {
+    "label": "Iron Vault",
+    "length": 4,
+    "code": "K7R4",
+    "requires": [
+      "vent"
+    ],
+    "position": {
+      "x": 82,
+      "y": 66
+    }
+  },
+  "objects": [
+    {
+      "id": "candle",
+      "type": "puzzle",
+      "label": "Black Candle",
+      "icon": "🕯",
+      "position": {
+        "x": 14,
+        "y": 62
+      },
+      "puzzle": "f1_candle",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "painting",
+      "type": "puzzle",
+      "label": "Family Portraits",
+      "icon": "🖼",
+      "position": {
+        "x": 42,
+        "y": 28
+      },
+      "puzzle": "f1_painting",
+      "requires": [
+        "candle"
+      ],
+      "vault_positions": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "vent",
+      "type": "puzzle",
+      "label": "Rusty Vent",
+      "icon": "▓",
+      "position": {
+        "x": 66,
+        "y": 82
+      },
+      "puzzle": "f1_vent",
+      "requires": [
+        "painting"
+      ],
+      "vault_positions": [
+        3
+      ]
+    }
+  ],
+  "hints": {
+    "candle": [
+      "Think about what fraction of each candle is left after some hours.",
+      "The thick candle loses 1/6 of its length every hour, the thin one 1/4. Write what remains of each after t hours.",
+      "Look closely at the wax pooled at the foot of the candle: remaining thick = 2 x remaining thin is the equation to solve.",
+      "Solve 1 - t/6 = 2 x (1 - t/4). The answer is a whole number of hours. The vault's first character is the letter K."
+    ],
+    "painting": [
+      "Place the Baron first: the facts leave only two possible frames for him.",
+      "Facts 2 and 3 settle the Baron. Then use the Maid, who sits between the Doctor and the Butler.",
+      "The Widow hangs at the far right end of the row. The Doctor, Maid and Butler fill frames 2, 3 and 4.",
+      "The row from the left is: Baron, Doctor, Maid, Butler, Widow. The vault's second and third characters are the digit 7 and the letter R."
+    ],
+    "vent": [
+      "Do not look at the numbers themselves. Look at the gaps between them.",
+      "The gaps are 1, 2, 4 and so on. What would the next gap be?",
+      "Add the next gap to the last number on the row. The scratched numbers are behind the portraits.",
+      "The next gap is 16, so the dial needs 34. The vault's last character is the digit 4."
+    ],
+    "vault": [
+      "The code has four characters: a letter, a digit, a letter and a digit.",
+      "Each object you solved gave you part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: candle, portraits, vent.",
+      "The code reads K7R4."
+    ]
+  }
+}

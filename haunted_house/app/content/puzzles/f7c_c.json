@@ -1,0 +1,15 @@
+{
+  "id": "f7c_c",
+  "title": "The Staircase of Choices",
+  "category": "mathematics",
+  "difficulty": "very_hard",
+  "steps": [
+    {
+      "prompt": "A courtyard is a grid. Its width is the number from the Brass Gear and its height is the number from the Pendulum, counted in steps. Starting at one corner you may only walk RIGHT or UP. How many different routes lead to the opposite corner?",
+      "answer_type": "numeric",
+      "answer": 35,
+      "placeholder": "number of routes"
+    }
+  ],
+  "reveal_text": "The hands spin and stop. A panel opens behind the clock face to show a key."
+}

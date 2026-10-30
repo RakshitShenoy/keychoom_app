@@ -1,0 +1,15 @@
+{
+  "id": "f3s_b",
+  "title": "The Urn of Souls",
+  "category": "probability",
+  "difficulty": "medium_plus",
+  "steps": [
+    {
+      "prompt": "An urn holds 2 red, 5 black and 1 green soul-stones. Two stones are drawn one after the other WITHOUT putting the first back. What is the probability that they are at least one red stone? Give a fraction (like 3/10) or a decimal.",
+      "answer_type": "numeric",
+      "answer": "13/28",
+      "placeholder": "e.g. 3/10"
+    }
+  ],
+  "reveal_text": "Inside the glass a mist forms the number 3."
+}

@@ -1,0 +1,118 @@
+{
+  "id": "floor6_crypt",
+  "floor": 6,
+  "title": "The Crypt Below the Altar",
+  "intro": "Stone steps lead down into cold air that smells of earth. Coffins line the walls. One sarcophagus has a lock instead of a lid.",
+  "fragment": {
+    "id": "fragment_6",
+    "label": "Floor 6 Key Fragment",
+    "rune": "E"
+  },
+  "vault": {
+    "label": "Sarcophagus",
+    "length": 4,
+    "code": "FG6N",
+    "requires": [
+      "c_angel"
+    ],
+    "position": {
+      "x": 88,
+      "y": 72
+    }
+  },
+  "objects": [
+    {
+      "id": "a_pile",
+      "type": "puzzle",
+      "label": "Bone Pile",
+      "icon": "💀",
+      "position": {
+        "x": 20,
+        "y": 30
+      },
+      "puzzle": "f6k_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_gate",
+      "type": "quiz",
+      "label": "Iron Gate",
+      "icon": "⛓",
+      "position": {
+        "x": 78,
+        "y": 38
+      },
+      "requires": [],
+      "vault_positions": [
+        1
+      ],
+      "quiz": {
+        "pool": "core_reasoning",
+        "questions": 5,
+        "time_limit_seconds": 150,
+        "pass_score": 3
+      },
+      "reward_text": "The gate rattles. A number is hammered into the rusted bars: 3."
+    },
+    {
+      "id": "c_angel",
+      "type": "puzzle",
+      "label": "Stone Angel",
+      "icon": "😇",
+      "position": {
+        "x": 44,
+        "y": 70
+      },
+      "puzzle": "f6k_c",
+      "requires": [
+        "a_pile",
+        "b_gate"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_coffin",
+      "type": "trap",
+      "label": "Open Coffin",
+      "icon": "⚰",
+      "position": {
+        "x": 10,
+        "y": 82
+      },
+      "requires": [],
+      "reward_text": "The coffin is not empty. It never was."
+    }
+  ],
+  "hints": {
+    "a_pile": [
+      "Try assuming the first speaker is a knight and follow what that forces. If you hit a contradiction, they are a knave.",
+      "A statement from a knave must be FALSE. Negate it to learn something certain.",
+      "There are exactly 2 knights.",
+      "The knights are Aldric, Hester. The code is AH. The vault's character number 1 is F."
+    ],
+    "b_gate": [
+      "This is a quick quiz of five reasoning questions. Read each one calmly.",
+      "You need 3 of the 5 right. The server keeps the clock, so do not dawdle.",
+      "If you fail you can try again with a fresh set of questions.",
+      "Answer the five questions and the reward shows a clue number. The vault's character number 2 is G."
+    ],
+    "c_angel": [
+      "Look up P and Q in your clue notes.",
+      "List the numbers above 56 that leave remainder 2 when divided by P.",
+      "Check each of them against the second condition (remainder 1 when divided by Q).",
+      "The answer is 58. The vault's characters number 3 and 4 are 6 and N."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Bone Pile, Iron Gate, Stone Angel.",
+      "The code reads FG6N."
+    ]
+  }
+}

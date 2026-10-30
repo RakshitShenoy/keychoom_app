@@ -1,0 +1,15 @@
+{
+  "id": "f3s_c",
+  "title": "The Remainder Seal",
+  "category": "numerical_reasoning",
+  "difficulty": "medium_plus",
+  "steps": [
+    {
+      "prompt": "Let P be the number found at the Spirit Board and Q the number found at the Crystal Ball. The seal turns to the remainder when P x P + Q is divided by 7. What is that remainder?",
+      "answer_type": "numeric",
+      "answer": 0,
+      "placeholder": "the remainder"
+    }
+  ],
+  "reveal_text": "Behind the curtain, a small key hangs from a nail."
+}

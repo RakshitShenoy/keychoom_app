@@ -1,0 +1,57 @@
+{
+  "id": "core_dares",
+  "title": "Friendly Dares",
+  "dares": [
+    {
+      "id": "dare_whisper",
+      "text": "Say your team's name out loud in your best spooky whisper.",
+      "tags": [
+        "voice"
+      ],
+      "safety_reviewed": true
+    },
+    {
+      "id": "dare_story",
+      "text": "Tell your team your favourite spooky story or film in one sentence.",
+      "tags": [
+        "voice",
+        "social"
+      ],
+      "safety_reviewed": true
+    },
+    {
+      "id": "dare_stretch",
+      "text": "Stand up, stretch your arms to the ceiling for five seconds, then sit back down.",
+      "tags": [
+        "movement_light"
+      ],
+      "safety_reviewed": true
+    },
+    {
+      "id": "dare_wave",
+      "text": "Do a slow, dramatic ghost wave with one hand for five seconds.",
+      "tags": [
+        "movement_light",
+        "creative"
+      ],
+      "safety_reviewed": true
+    },
+    {
+      "id": "dare_fact",
+      "text": "Share a fun fact with your team in your best storyteller voice.",
+      "tags": [
+        "voice",
+        "social"
+      ],
+      "safety_reviewed": true
+    },
+    {
+      "id": "dare_highfive",
+      "text": "Give a friendly wave or high-five to a teammate.",
+      "tags": [
+        "social"
+      ],
+      "safety_reviewed": true
+    }
+  ]
+}

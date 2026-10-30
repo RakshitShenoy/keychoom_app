@@ -1,0 +1,15 @@
+{
+  "id": "f1_vent",
+  "title": "The Whispering Vent",
+  "category": "sequences",
+  "difficulty": "medium",
+  "prompt": "The vent's dial must be set to the next number in the row scratched behind the portrait: 3, 4, 6, 10, 18, ?",
+  "answer_type": "numeric",
+  "answer": 34,
+  "placeholder": "next number",
+  "wrong_feedback": {
+    "26": "Look at how much each number grows compared to the one before it.",
+    "30": "Look at how much each number grows compared to the one before it."
+  },
+  "reveal_text": "The grille swings open. A small iron plate behind it is stamped with the last piece of the vault's code."
+}

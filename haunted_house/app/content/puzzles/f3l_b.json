@@ -1,0 +1,15 @@
+{
+  "id": "f3l_b",
+  "title": "The Counted Candles",
+  "category": "numerical_reasoning",
+  "difficulty": "medium_plus",
+  "steps": [
+    {
+      "prompt": "A coven counts its candles. The total is more than 0 and at most 72. When they group the candles, there are 3 left over when grouped in 8s, 4 left over when grouped in 9s. How many candles are there?",
+      "answer_type": "numeric",
+      "answer": 67,
+      "placeholder": "number of candles"
+    }
+  ],
+  "reveal_text": "The flame spells out a number in the smoke: 6."
+}

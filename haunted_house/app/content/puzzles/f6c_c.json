@@ -1,0 +1,15 @@
+{
+  "id": "f6c_c",
+  "title": "The Twin Remainders",
+  "category": "numerical_reasoning",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "Let P be the number from the Stained Glass and Q the number from the Church Bell. Find the smallest number above 47 that leaves a remainder of 4 when divided by P and a remainder of 1 when divided by Q.",
+      "answer_type": "numeric",
+      "answer": 49,
+      "placeholder": "the number"
+    }
+  ],
+  "reveal_text": "The flames lean towards the altar. Under the cloth lies a small key."
+}

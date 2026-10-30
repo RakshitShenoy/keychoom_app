@@ -1,0 +1,15 @@
+{
+  "id": "f2k_c",
+  "title": "The Two-Clue Lock",
+  "category": "mathematics",
+  "difficulty": "medium",
+  "steps": [
+    {
+      "prompt": "The lock needs both clues you found. Let P be the number from the Bubbling Cauldron and Q the number from the Rusted Cleaver (check your clue notes). Calculate P x Q + P + Q.",
+      "answer_type": "numeric",
+      "answer": 49,
+      "placeholder": "the result"
+    }
+  ],
+  "reveal_text": "The jars rattle and a hidden drawer slides open. Inside, an old key is wrapped in butcher's paper."
+}

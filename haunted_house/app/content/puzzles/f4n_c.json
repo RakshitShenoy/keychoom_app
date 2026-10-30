@@ -1,0 +1,15 @@
+{
+  "id": "f4n_c",
+  "title": "The Staircase of Choices",
+  "category": "mathematics",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "A courtyard is a grid. Its width is the number from the Music Box and its height is the number from the Rocking Horse, counted in steps. Starting at one corner you may only walk RIGHT or UP. How many different routes lead to the opposite corner?",
+      "answer_type": "numeric",
+      "answer": 56,
+      "placeholder": "number of routes"
+    }
+  ],
+  "reveal_text": "In the tiny attic window a miniature key is hanging. It grows to full size in your hand."
+}

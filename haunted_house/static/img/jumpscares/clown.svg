@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="g" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#2a0000"/><stop offset="1" stop-color="#000"/></radialGradient>
+<filter id="b"><feGaussianBlur stdDeviation="6"/></filter><filter id="n"><feTurbulence baseFrequency=".9" numOctaves="2"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .12 0"/></filter></defs>
+<rect width="800" height="600" fill="url(#g)"/><ellipse cx="400" cy="320" rx="260" ry="290" fill="#ece6dd"/>
+<path d="M170 250 Q200 90 400 70 Q600 90 630 250" fill="#c01020"/>
+<ellipse cx="300" cy="290" rx="55" ry="40" fill="#000"/><ellipse cx="500" cy="290" rx="55" ry="40" fill="#000"/>
+<circle cx="300" cy="292" r="16" fill="#ff2a00"/><circle cx="500" cy="292" r="16" fill="#ff2a00"/>
+<path d="M300 210 L300 400 M500 210 L500 400" stroke="#1a1a8a" stroke-width="12"/>
+<circle cx="400" cy="380" r="34" fill="#c01020"/>
+<path d="M210 470 Q400 640 590 470 Q400 540 210 470Z" fill="#c01020"/>
+<path d="M440 100 L400 220 L450 280 L410 400 L470 480" stroke="#5a3a3a" stroke-width="4" fill="none"/><rect width="800" height="600" filter="url(#n)"/></svg>

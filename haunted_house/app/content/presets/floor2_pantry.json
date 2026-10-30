@@ -1,0 +1,118 @@
+{
+  "id": "floor2_pantry",
+  "floor": 2,
+  "title": "The Pantry of Whispers",
+  "intro": "Shelves of dusty jars line the walls and every one of them seems to whisper. A small iron safe is bolted behind the biggest shelf.",
+  "fragment": {
+    "id": "fragment_2",
+    "label": "Floor 2 Key Fragment",
+    "rune": "I"
+  },
+  "vault": {
+    "label": "Larder Safe",
+    "length": 4,
+    "code": "76F2",
+    "requires": [
+      "c_sack"
+    ],
+    "position": {
+      "x": 88,
+      "y": 72
+    }
+  },
+  "objects": [
+    {
+      "id": "a_jar",
+      "type": "puzzle",
+      "label": "Pickling Jar",
+      "icon": "🫙",
+      "position": {
+        "x": 20,
+        "y": 30
+      },
+      "puzzle": "f2p_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_barrel",
+      "type": "quiz",
+      "label": "Whispering Barrel",
+      "icon": "🛢",
+      "position": {
+        "x": 78,
+        "y": 38
+      },
+      "requires": [],
+      "vault_positions": [
+        1
+      ],
+      "quiz": {
+        "pool": "core_reasoning",
+        "questions": 5,
+        "time_limit_seconds": 150,
+        "pass_score": 3
+      },
+      "reward_text": "The barrel stops whispering and a voice says one number: 8."
+    },
+    {
+      "id": "c_sack",
+      "type": "puzzle",
+      "label": "Flour Sack",
+      "icon": "🌾",
+      "position": {
+        "x": 44,
+        "y": 70
+      },
+      "puzzle": "f2p_c",
+      "requires": [
+        "a_jar",
+        "b_barrel"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_ham",
+      "type": "trap",
+      "label": "Hanging Ham",
+      "icon": "🍖",
+      "position": {
+        "x": 10,
+        "y": 82
+      },
+      "requires": [],
+      "reward_text": "The ham swings round and the face carved into it grins at you."
+    }
+  ],
+  "hints": {
+    "a_jar": [
+      "Look at the differences between neighbouring numbers.",
+      "The differences are 2, 4, 8, 16. Each is a multiple of the one before.",
+      "The differences are multiplied by 2 each time, so the next difference is 32.",
+      "32 + 32 = 64. The vault's character number 1 is 7."
+    ],
+    "b_barrel": [
+      "This is a quick quiz of five reasoning questions. Read each one calmly.",
+      "You need 3 of the 5 right. The server keeps the clock, so do not dawdle.",
+      "If you fail you can try again with a fresh set of questions.",
+      "Answer the five questions and the reward shows a clue number. The vault's character number 2 is 6."
+    ],
+    "c_sack": [
+      "Open your clue notes: you need the number from the Pickling Jar and the number from the Whispering Barrel.",
+      "Multiply the two numbers, then add each of them once.",
+      "P x Q = 40.",
+      "40 + 5 + 8 = 53. The vault's characters number 3 and 4 are F and 2."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Pickling Jar, Whispering Barrel, Flour Sack.",
+      "The code reads 76F2."
+    ]
+  }
+}

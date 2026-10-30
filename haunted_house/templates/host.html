@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Host &middot; Escape the Haunted House{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Host rules</h2>
+  <ul class="rules">
+    <li>You create the lobby and share the Game Code with players.</li>
+    <li>You do not take part in the puzzles.</li>
+    <li>You choose the team leaders and start the game when everyone is ready.</li>
+    <li>You watch every team's progress from the dashboard.</li>
+  </ul>
+</div>
+
+<div class="card" id="create-card">
+  <h2>Create a lobby</h2>
+  <form id="create-form">
+    <label for="team_count">Number of teams ({{ min_teams }}&ndash;{{ max_teams }})</label>
+    <input id="team_count" type="number" min="{{ min_teams }}" max="{{ max_teams }}" value="{{ min_teams }}">
+    <label for="min_players_per_team">Minimum players per team ({{ min_players }}&ndash;{{ max_players }})</label>
+    <input id="min_players_per_team" type="number" min="{{ min_players }}" max="{{ max_players }}" value="{{ min_players }}">
+    <label for="max_players_per_team">Maximum players per team ({{ min_players }}&ndash;{{ max_players }})</label>
+    <input id="max_players_per_team" type="number" min="{{ min_players }}" max="{{ max_players }}" value="{{ max_players }}">
+    <label for="base_duration_minutes">Base game duration in minutes ({{ min_minutes }}&ndash;{{ max_minutes }})</label>
+    <input id="base_duration_minutes" type="number" min="{{ min_minutes }}" max="{{ max_minutes }}" value="90" placeholder="{{ default_minutes }}">
+    <p class="muted">Eight floors take a while: 90 minutes is a good start for the full building.</p>
+    <button type="submit">Create lobby</button>
+  </form>
+  <p class="error" id="create-error"></p>
+</div>
+
+<div id="lobby" class="hidden">
+  <div class="card">
+    <h2>Your lobby <span id="conn-status" class="badge conn" title="Live connection to the server">...</span></h2>
+    <div class="code" id="game-code"></div>
+    <p>State: <strong id="lobby-state"></strong> &middot; Players: <strong id="player-count"></strong></p>
+    <div class="row">
+      <button type="button" id="btn-start">START TEAM FORMATION</button>
+      <button type="button" id="btn-lock">LOCK TEAM FORMATION</button>
+      <button type="button" id="btn-reopen">REOPEN FORMATION</button>
+      <button type="button" id="btn-startgame">START GAME</button>
+    </div>
+    <p class="error" id="action-error"></p>
+    <ul class="problems" id="problems"></ul>
+    <ul class="muted" id="activity"></ul>
+  </div>
+
+  <div class="card hidden" id="dash-card">
+    <div class="dash-head">
+      <h2>Game dashboard</h2>
+      <span id="dash-status" class="badge">-</span>
+      <span class="muted" id="dash-players"></span>
+    </div>
+    <div class="dash-clocks">
+      <div><span class="muted">Game time</span> <b id="dash-elapsed">-</b> <span class="muted">of</span> <span id="dash-base">-</span></div>
+    </div>
+    <div class="row">
+      <button type="button" id="btn-pause">PAUSE GAME</button>
+      <button type="button" id="btn-resume">RESUME GAME</button>
+    </div>
+    <p class="error" id="dash-error"></p>
+    <div id="dash-winner"></div>
+
+    <h3>Where is everyone?</h3>
+    <div id="tower" class="tower" aria-label="Progress of every team through the eight floors"></div>
+
+    <h3>All teams</h3>
+    <div class="scroll"><table class="hh-dash" id="dash-teams"></table></div>
+
+    <h3>Team details</h3>
+    <div class="dash-cards" id="dash-cards"></div>
+
+    <h3>Recent activity</h3>
+    <ul class="dash-feed" id="dash-feed"></ul>
+  </div>
+  <div class="card" id="teams-card"><h2>Teams</h2><div class="teams" id="teams"></div></div>
+  <div class="card"><h2>Players</h2><table class="plist" id="players"></table></div>
+  <div class="card" id="chat-card"><h2>Lobby chat</h2><div class="chat" id="chat"></div><p class="closed" id="chat-closed"></p></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/realtime.js"></script><script src="/static/js/host.js"></script>{% endblock %}

@@ -1,0 +1,21 @@
+{
+  "id": "f6k_a",
+  "title": "The Island of Liars",
+  "category": "logic",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "In the haunted village, every resident is either a KNIGHT (always tells the truth) or a KNAVE (always lies). 4 residents speak. Work out who is who. Answer with the first letters of the names of all the KNIGHTS in alphabetical order, with no spaces (for example AC).",
+      "answer_type": "code",
+      "answer": "AH",
+      "clues": [
+        "Aldric says: \"Exactly one of Fenella and Aldric is a knight.\"",
+        "Corvin says: \"Exactly one of Hester and Aldric is a knight.\"",
+        "Fenella says: \"Corvin is a knight.\"",
+        "Hester says: \"Fenella and Corvin are both knaves.\""
+      ],
+      "placeholder": "initials of the knights"
+    }
+  ],
+  "reveal_text": "Among the bones a rib has a number scratched into it: 7."
+}

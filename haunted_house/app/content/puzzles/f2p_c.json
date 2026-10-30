@@ -1,0 +1,15 @@
+{
+  "id": "f2p_c",
+  "title": "The Two-Clue Lock",
+  "category": "mathematics",
+  "difficulty": "medium",
+  "steps": [
+    {
+      "prompt": "The lock needs both clues you found. Let P be the number from the Pickling Jar and Q the number from the Whispering Barrel (check your clue notes). Calculate P x Q + P + Q.",
+      "answer_type": "numeric",
+      "answer": 53,
+      "placeholder": "the result"
+    }
+  ],
+  "reveal_text": "The sack splits open and a brass key falls out of the flour."
+}

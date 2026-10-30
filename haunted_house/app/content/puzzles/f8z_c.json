@@ -1,0 +1,15 @@
+{
+  "id": "f8z_c",
+  "title": "The Twin Remainders",
+  "category": "numerical_reasoning",
+  "difficulty": "very_hard",
+  "steps": [
+    {
+      "prompt": "Let P be the number from the Beating Heart Stone and Q the number from the Chained Throne. Find the smallest number above 60 that leaves a remainder of 4 when divided by P and a remainder of 2 when divided by Q.",
+      "answer_type": "numeric",
+      "answer": 74,
+      "placeholder": "the number"
+    }
+  ],
+  "reveal_text": "The bones rearrange themselves and form an arrow pointing to a hidden key."
+}

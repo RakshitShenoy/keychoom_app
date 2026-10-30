@@ -1,0 +1,15 @@
+{
+  "id": "f8z_b",
+  "title": "The Scrambled Epitaph",
+  "category": "mathematics",
+  "difficulty": "very_hard",
+  "steps": [
+    {
+      "prompt": "The letters of the word BANSHEE are carved on separate tiles. How many DIFFERENT arrangements of all the tiles have no two E's next to each other? (Identical letters are indistinguishable.)",
+      "answer_type": "numeric",
+      "answer": 1800,
+      "placeholder": "number of arrangements"
+    }
+  ],
+  "reveal_text": "A word is carved into the arm of the throne: 3."
+}

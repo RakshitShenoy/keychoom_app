@@ -1,0 +1,131 @@
+{
+  "id": "floor2_kitchen",
+  "floor": 2,
+  "title": "The Rotten Kitchen",
+  "intro": "Flies drift over a feast that rotted a century ago. Something is still simmering. The way up is sealed in the meat locker at the back of the kitchen.",
+  "fragment": {
+    "id": "fragment_2",
+    "label": "Floor 2 Key Fragment",
+    "rune": "I"
+  },
+  "vault": {
+    "label": "Meat Locker",
+    "length": 4,
+    "code": "D5KP",
+    "requires": [
+      "c_rack"
+    ],
+    "position": {
+      "x": 88,
+      "y": 72
+    }
+  },
+  "objects": [
+    {
+      "id": "a_cauldron",
+      "type": "puzzle",
+      "label": "Bubbling Cauldron",
+      "icon": "🍲",
+      "position": {
+        "x": 20,
+        "y": 30
+      },
+      "puzzle": "f2k_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_cleaver",
+      "type": "puzzle",
+      "label": "Rusted Cleaver",
+      "icon": "🔪",
+      "position": {
+        "x": 78,
+        "y": 38
+      },
+      "puzzle": "f2k_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_rack",
+      "type": "puzzle",
+      "label": "Spice Rack",
+      "icon": "🧂",
+      "position": {
+        "x": 44,
+        "y": 70
+      },
+      "puzzle": "f2k_c",
+      "requires": [
+        "a_cauldron",
+        "b_cleaver"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_oven",
+      "type": "trap",
+      "label": "Cracked Oven",
+      "icon": "♨",
+      "position": {
+        "x": 10,
+        "y": 82
+      },
+      "requires": [],
+      "reward_text": "The oven door swings open and something inside SCREAMS."
+    },
+    {
+      "id": "dare_ghoul",
+      "type": "dare",
+      "label": "Hungry Ghoul",
+      "icon": "👹",
+      "position": {
+        "x": 60,
+        "y": 14
+      },
+      "requires": [],
+      "dare_pool": "core_dares",
+      "reward_text": "The spirit is amused. It whispers: 'Everything in this room is connected. Finish what you started.'"
+    }
+  ],
+  "hints": {
+    "a_cauldron": [
+      "To decode, move every letter BACKWARD by the same number of places.",
+      "Move each letter back 11. The first letter M becomes ...",
+      "The first letter of the answer is B and the word has 10 letters.",
+      "The word is BROOMSTICK. The vault's character number 1 is D."
+    ],
+    "b_cleaver": [
+      "Percentage changes are applied one after the other, each to the latest price.",
+      "After the rise: 800 x 7/5 = 1120.",
+      "Now take 25% off that amount.",
+      "The final price is 840 coins. The vault's character number 2 is 5."
+    ],
+    "c_rack": [
+      "Open your clue notes: you need the number from the Bubbling Cauldron and the number from the Rusted Cleaver.",
+      "Multiply the two numbers, then add each of them once.",
+      "P x Q = 36.",
+      "36 + 9 + 4 = 49. The vault's characters number 3 and 4 are K and P."
+    ],
+    "dare_ghoul": [
+      "A dare is optional and never needed to leave the floor.",
+      "It never costs you anything to skip it.",
+      "Do the dare only if you and your team are happy with it.",
+      "It never owns part of the vault code. Skip it freely."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Bubbling Cauldron, Rusted Cleaver, Spice Rack.",
+      "The code reads D5KP."
+    ]
+  }
+}

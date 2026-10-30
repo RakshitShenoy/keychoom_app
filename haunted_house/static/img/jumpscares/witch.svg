@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="g" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#14001f"/><stop offset="1" stop-color="#000"/></radialGradient>
+<filter id="b"><feGaussianBlur stdDeviation="6"/></filter><filter id="n"><feTurbulence baseFrequency=".9" numOctaves="2"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .12 0"/></filter></defs>
+<rect width="800" height="600" fill="url(#g)"/><path d="M400 20 L520 290 L690 330 L690 360 L110 360 L110 330 L280 290Z" fill="#0b0310"/>
+<path d="M280 290 Q400 260 520 290 L500 330 Q400 310 300 330Z" fill="#401060"/>
+<ellipse cx="400" cy="470" rx="170" ry="190" fill="#1c0b26"/>
+<ellipse cx="400" cy="440" rx="120" ry="130" fill="#b9c9a8"/>
+<ellipse cx="350" cy="420" rx="26" ry="34" fill="#000"/><ellipse cx="450" cy="420" rx="26" ry="34" fill="#000"/>
+<circle cx="350" cy="425" r="8" fill="#9cff3a" filter="url(#b)"/><circle cx="450" cy="425" r="8" fill="#9cff3a" filter="url(#b)"/>
+<path d="M400 440 L380 500 L412 500Z" fill="#7d8c70"/><path d="M345 540 Q400 580 455 540" stroke="#200" stroke-width="10" fill="none"/><rect width="800" height="600" filter="url(#n)"/></svg>

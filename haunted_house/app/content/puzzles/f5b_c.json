@@ -1,0 +1,15 @@
+{
+  "id": "f5b_c",
+  "title": "The Staircase of Choices",
+  "category": "mathematics",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "A courtyard is a grid. Its width is the number from the Grand Piano and its height is the number from the Chandelier, counted in steps. Starting at one corner you may only walk RIGHT or UP. How many different routes lead to the opposite corner?",
+      "answer_type": "numeric",
+      "answer": 126,
+      "placeholder": "number of routes"
+    }
+  ],
+  "reveal_text": "The record slows and a voice says where the key is hidden. You find it inside the horn."
+}

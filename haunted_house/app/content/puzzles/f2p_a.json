@@ -1,0 +1,15 @@
+{
+  "id": "f2p_a",
+  "title": "The Doubling Gaps",
+  "category": "sequences",
+  "difficulty": "medium",
+  "steps": [
+    {
+      "prompt": "A dial's numbers are carved around its rim: 2, 4, 8, 16, 32, ... What number comes next?",
+      "answer_type": "numeric",
+      "answer": 64,
+      "placeholder": "the next number"
+    }
+  ],
+  "reveal_text": "Something pale floats against the glass and its label reads: 5."
+}

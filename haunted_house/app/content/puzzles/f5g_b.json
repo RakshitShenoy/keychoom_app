@@ -1,0 +1,21 @@
+{
+  "id": "f5g_b",
+  "title": "The Island of Liars",
+  "category": "logic",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "In the haunted village, every resident is either a KNIGHT (always tells the truth) or a KNAVE (always lies). 4 residents speak. Work out who is who. Answer with the first letters of the names of all the KNIGHTS in alphabetical order, with no spaces (for example AC).",
+      "answer_type": "code",
+      "answer": "BDF",
+      "clues": [
+        "Brynn says: \"Exactly 3 of the 4 of us are knights.\"",
+        "Drusilla says: \"Exactly one of Edmund and Brynn is a knight.\"",
+        "Edmund says: \"Drusilla and Brynn are both knaves.\"",
+        "Fenella says: \"Exactly 3 of the 4 of us are knights.\""
+      ],
+      "placeholder": "initials of the knights"
+    }
+  ],
+  "reveal_text": "The plinth is engraved with a number: 5."
+}

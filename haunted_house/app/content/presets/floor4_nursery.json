@@ -1,0 +1,131 @@
+{
+  "id": "floor4_nursery",
+  "floor": 4,
+  "title": "The Haunted Nursery",
+  "intro": "A rocking horse creaks without a rider. A music box plays a lullaby that does not quite fit the tune. Whatever you need is locked inside the toy chest.",
+  "fragment": {
+    "id": "fragment_4",
+    "label": "Floor 4 Key Fragment",
+    "rune": "C"
+  },
+  "vault": {
+    "label": "Toy Chest",
+    "length": 4,
+    "code": "QX3U",
+    "requires": [
+      "c_house"
+    ],
+    "position": {
+      "x": 88,
+      "y": 72
+    }
+  },
+  "objects": [
+    {
+      "id": "a_box",
+      "type": "puzzle",
+      "label": "Music Box",
+      "icon": "🎵",
+      "position": {
+        "x": 20,
+        "y": 30
+      },
+      "puzzle": "f4n_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_horse",
+      "type": "puzzle",
+      "label": "Rocking Horse",
+      "icon": "🐴",
+      "position": {
+        "x": 78,
+        "y": 38
+      },
+      "puzzle": "f4n_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_house",
+      "type": "puzzle",
+      "label": "Doll House",
+      "icon": "🏚",
+      "position": {
+        "x": 44,
+        "y": 70
+      },
+      "puzzle": "f4n_c",
+      "requires": [
+        "a_box",
+        "b_horse"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_doll",
+      "type": "trap",
+      "label": "Smiling Doll",
+      "icon": "🪆",
+      "position": {
+        "x": 10,
+        "y": 82
+      },
+      "requires": [],
+      "reward_text": "The doll's head turns and its eyes open wide."
+    },
+    {
+      "id": "dare_top",
+      "type": "dare",
+      "label": "Spinning Top",
+      "icon": "🪀",
+      "position": {
+        "x": 60,
+        "y": 14
+      },
+      "requires": [],
+      "dare_pool": "core_dares",
+      "reward_text": "The spirit is amused. It whispers: 'Everything in this room is connected. Finish what you started.'"
+    }
+  ],
+  "hints": {
+    "a_box": [
+      "Write the rule as a formula: next = previous + the one before that + a fixed extra.",
+      "Check it: 4 + 4 + 3 = 11. Keep going one generation at a time.",
+      "Generations 7, 8 and 9 are 88, 144, 235.",
+      "Generation 10 = 235 + 144 + 3 = 382. The vault's character number 1 is Q."
+    ],
+    "b_horse": [
+      "Start with the clue that rules out the most positions, such as a figure at an end.",
+      "Work out which figures are certainly NOT next to each other, then try the possible arrangements.",
+      "From the left, the order begins: Butler, Heir.",
+      "The full row from the left is: Butler, Heir, Priest, Duke, Widow, Doctor. The answer is the Butler. The vault's character number 2 is X."
+    ],
+    "c_house": [
+      "You need exactly (width) steps right and (height) steps up, in some order.",
+      "The number of routes is the number of ways to choose which steps are 'right'.",
+      "That is C(8, 5), the number of ways to choose 5 items from 8.",
+      "The answer is 56. The vault's characters number 3 and 4 are 3 and U."
+    ],
+    "dare_top": [
+      "A dare is optional and never needed to leave the floor.",
+      "It never costs you anything to skip it.",
+      "Do the dare only if you and your team are happy with it.",
+      "It never owns part of the vault code. Skip it freely."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Music Box, Rocking Horse, Doll House.",
+      "The code reads QX3U."
+    ]
+  }
+}

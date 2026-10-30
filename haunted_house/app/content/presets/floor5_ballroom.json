@@ -1,0 +1,112 @@
+{
+  "id": "floor5_ballroom",
+  "floor": 5,
+  "title": "The Phantom Ballroom",
+  "intro": "A waltz plays from nowhere. Dancers you cannot see sweep past you in the dust. The orchestra pit hides a vault that has been waiting for the last dance.",
+  "fragment": {
+    "id": "fragment_5",
+    "label": "Floor 5 Key Fragment",
+    "rune": "H"
+  },
+  "vault": {
+    "label": "Orchestra Pit Vault",
+    "length": 4,
+    "code": "T7QD",
+    "requires": [
+      "c_gramophone"
+    ],
+    "position": {
+      "x": 84,
+      "y": 80
+    }
+  },
+  "objects": [
+    {
+      "id": "a_piano",
+      "type": "puzzle",
+      "label": "Grand Piano",
+      "icon": "🎹",
+      "position": {
+        "x": 16,
+        "y": 74
+      },
+      "puzzle": "f5b_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_chandelier",
+      "type": "puzzle",
+      "label": "Chandelier",
+      "icon": "🕯",
+      "position": {
+        "x": 36,
+        "y": 24
+      },
+      "puzzle": "f5b_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_gramophone",
+      "type": "puzzle",
+      "label": "Gramophone",
+      "icon": "📻",
+      "position": {
+        "x": 74,
+        "y": 48
+      },
+      "puzzle": "f5b_c",
+      "requires": [
+        "a_piano",
+        "b_chandelier"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_mirror",
+      "type": "trap",
+      "label": "Dancing Mirror",
+      "icon": "🪞",
+      "position": {
+        "x": 54,
+        "y": 84
+      },
+      "requires": [],
+      "reward_text": "Your reflection does not copy you. It lunges."
+    }
+  ],
+  "hints": {
+    "a_piano": [
+      "Start with the clue that rules out the most positions, such as a figure at an end.",
+      "Work out which figures are certainly NOT next to each other, then try the possible arrangements.",
+      "From the left, the order begins: Cook, Baron.",
+      "The full row from the left is: Cook, Baron, Heir, Butler, Doctor, Duke. The answer is the Butler. The vault's character number 1 is T."
+    ],
+    "b_chandelier": [
+      "Take the differences between neighbours. Then take the differences of those differences.",
+      "First differences: 7, 9, 11, 13, 15. The second differences are all the same: 2.",
+      "A constant second difference of 2 means the rule has the form 1n^2 + bn + c. Use the first terms to find b and c.",
+      "The rule is 1n^2 + 4n + 3. For n = 12 that is 195. The vault's character number 2 is 7."
+    ],
+    "c_gramophone": [
+      "You need exactly (width) steps right and (height) steps up, in some order.",
+      "The number of routes is the number of ways to choose which steps are 'right'.",
+      "That is C(9, 5), the number of ways to choose 5 items from 9.",
+      "The answer is 126. The vault's characters number 3 and 4 are Q and D."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Grand Piano, Chandelier, Gramophone.",
+      "The code reads T7QD."
+    ]
+  }
+}

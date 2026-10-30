@@ -1,0 +1,131 @@
+{
+  "id": "floor5_gallery",
+  "floor": 5,
+  "title": "The Portrait Gallery",
+  "intro": "Hundreds of portraits line the walls and every pair of eyes follows you. The curator's vault is hidden behind the largest frame.",
+  "fragment": {
+    "id": "fragment_5",
+    "label": "Floor 5 Key Fragment",
+    "rune": "H"
+  },
+  "vault": {
+    "label": "Curator's Vault",
+    "length": 4,
+    "code": "Z2V6",
+    "requires": [
+      "c_frame"
+    ],
+    "position": {
+      "x": 84,
+      "y": 80
+    }
+  },
+  "objects": [
+    {
+      "id": "a_portrait",
+      "type": "puzzle",
+      "label": "Founder's Portrait",
+      "icon": "🖼",
+      "position": {
+        "x": 16,
+        "y": 74
+      },
+      "puzzle": "f5g_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_bust",
+      "type": "puzzle",
+      "label": "Marble Bust",
+      "icon": "🗿",
+      "position": {
+        "x": 36,
+        "y": 24
+      },
+      "puzzle": "f5g_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_frame",
+      "type": "puzzle",
+      "label": "Gilded Frame",
+      "icon": "🪞",
+      "position": {
+        "x": 74,
+        "y": 48
+      },
+      "puzzle": "f5g_c",
+      "requires": [
+        "a_portrait",
+        "b_bust"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_portrait",
+      "type": "trap",
+      "label": "Weeping Portrait",
+      "icon": "😭",
+      "position": {
+        "x": 54,
+        "y": 84
+      },
+      "requires": [],
+      "reward_text": "The painted face opens its mouth and shrieks."
+    },
+    {
+      "id": "dare_rope",
+      "type": "dare",
+      "label": "Velvet Rope",
+      "icon": "🪢",
+      "position": {
+        "x": 90,
+        "y": 18
+      },
+      "requires": [],
+      "dare_pool": "core_dares",
+      "reward_text": "The spirit is amused. It whispers: 'Everything in this room is connected. Finish what you started.'"
+    }
+  ],
+  "hints": {
+    "a_portrait": [
+      "Write the rule as a formula: next = previous + the one before that + a fixed extra.",
+      "Check it: 1 + 2 + 2 = 5. Keep going one generation at a time.",
+      "Generations 7, 8 and 9 are 45, 74, 121.",
+      "Generation 10 = 121 + 74 + 2 = 197. The vault's character number 1 is Z."
+    ],
+    "b_bust": [
+      "Try assuming the first speaker is a knight and follow what that forces. If you hit a contradiction, they are a knave.",
+      "A statement from a knave must be FALSE. Negate it to learn something certain.",
+      "There are exactly 3 knights.",
+      "The knights are Brynn, Drusilla, Fenella. The code is BDF. The vault's character number 2 is 2."
+    ],
+    "c_frame": [
+      "You need exactly (width) steps right and (height) steps up, in some order.",
+      "The number of routes is the number of ways to choose which steps are 'right'.",
+      "That is C(8, 3), the number of ways to choose 3 items from 8.",
+      "The answer is 56. The vault's characters number 3 and 4 are V and 6."
+    ],
+    "dare_rope": [
+      "A dare is optional and never needed to leave the floor.",
+      "It never costs you anything to skip it.",
+      "Do the dare only if you and your team are happy with it.",
+      "It never owns part of the vault code. Skip it freely."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Founder's Portrait, Marble Bust, Gilded Frame.",
+      "The code reads Z2V6."
+    ]
+  }
+}

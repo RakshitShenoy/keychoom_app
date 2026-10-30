@@ -1,0 +1,17 @@
+# Replit configuration for "Escape the Haunted House".
+# Secrets (APP_ENV=production, SECRET_KEY, ...) are set in Tools -> Secrets, NEVER in this file.
+modules = ["python-3.12"]
+run = ["bash", "scripts/start.sh"]
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+# One instance only (live game state is in memory): choose "Reserved VM" when publishing.
+deploymentTarget = "gce"
+build = ["sh", "-c", "pip install -r requirements.txt"]
+run = ["bash", "scripts/start.sh"]
+
+[[ports]]
+localPort = 8000
+externalPort = 80

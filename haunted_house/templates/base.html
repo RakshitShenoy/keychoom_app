@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Escape the Haunted House{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/dev.css">
+  <link rel="stylesheet" href="/static/css/haunted.css">
+</head>
+<body>
+<main>
+  <h1>Escape the Haunted House</h1>
+  <p class="tagline">Eight floors. One way out. Only the first team to escape survives the night.</p>
+  {% block content %}{% endblock %}
+</main>
+<script src="/static/js/common.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

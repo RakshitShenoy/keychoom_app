@@ -1,0 +1,131 @@
+{
+  "id": "floor7_clocktower",
+  "floor": 7,
+  "title": "The Clocktower",
+  "intro": "Giant gears grind in the dark. The clock has been striking thirteen for a hundred years. The mechanism box in the middle of the gears needs the right code.",
+  "fragment": {
+    "id": "fragment_7",
+    "label": "Floor 7 Key Fragment",
+    "rune": "R"
+  },
+  "vault": {
+    "label": "Mechanism Box",
+    "length": 4,
+    "code": "6FV4",
+    "requires": [
+      "c_face"
+    ],
+    "position": {
+      "x": 88,
+      "y": 72
+    }
+  },
+  "objects": [
+    {
+      "id": "a_gear",
+      "type": "puzzle",
+      "label": "Brass Gear",
+      "icon": "⚙",
+      "position": {
+        "x": 20,
+        "y": 30
+      },
+      "puzzle": "f7c_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_pendulum",
+      "type": "puzzle",
+      "label": "Pendulum",
+      "icon": "⏳",
+      "position": {
+        "x": 78,
+        "y": 38
+      },
+      "puzzle": "f7c_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_face",
+      "type": "puzzle",
+      "label": "Clock Face",
+      "icon": "🕰",
+      "position": {
+        "x": 44,
+        "y": 70
+      },
+      "puzzle": "f7c_c",
+      "requires": [
+        "a_gear",
+        "b_pendulum"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_door",
+      "type": "trap",
+      "label": "Cuckoo Door",
+      "icon": "🐦",
+      "position": {
+        "x": 10,
+        "y": 82
+      },
+      "requires": [],
+      "reward_text": "The tiny door bursts open and a shrieking face leaps out."
+    },
+    {
+      "id": "dare_rope",
+      "type": "dare",
+      "label": "Bell Rope",
+      "icon": "🔔",
+      "position": {
+        "x": 60,
+        "y": 14
+      },
+      "requires": [],
+      "dare_pool": "core_dares",
+      "reward_text": "The spirit is amused. It whispers: 'Everything in this room is connected. Finish what you started.'"
+    }
+  ],
+  "hints": {
+    "a_gear": [
+      "Count routes tile by tile: the routes to a tile = routes to the tile above + routes to the tile on its left.",
+      "A collapsed tile has 0 routes. Start with the top-left tile = 1 and fill the grid row by row.",
+      "Bottom row, built up: 0, 0, 2, 0, 13, 38.",
+      "The answer is 38. The vault's character number 1 is 6."
+    ],
+    "b_pendulum": [
+      "Start with the biggest group size (7) and list the numbers that leave the right remainder.",
+      "Check each of those numbers against the other conditions.",
+      "The answer is between 26 and 46.",
+      "The answer is 36. The vault's character number 2 is F."
+    ],
+    "c_face": [
+      "You need exactly (width) steps right and (height) steps up, in some order.",
+      "The number of routes is the number of ways to choose which steps are 'right'.",
+      "That is C(7, 4), the number of ways to choose 4 items from 7.",
+      "The answer is 35. The vault's characters number 3 and 4 are V and 4."
+    ],
+    "dare_rope": [
+      "A dare is optional and never needed to leave the floor.",
+      "It never costs you anything to skip it.",
+      "Do the dare only if you and your team are happy with it.",
+      "It never owns part of the vault code. Skip it freely."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Brass Gear, Pendulum, Clock Face.",
+      "The code reads 6FV4."
+    ]
+  }
+}
