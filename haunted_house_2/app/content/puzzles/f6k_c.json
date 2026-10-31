@@ -1,0 +1,15 @@
+{
+  "id": "f6k_c",
+  "title": "The Twin Remainders",
+  "category": "numerical_reasoning",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "Let P be the number from the Bone Pile and Q the number from the Iron Gate. Find the smallest number above 56 that leaves a remainder of 2 when divided by P and a remainder of 1 when divided by Q.",
+      "answer_type": "numeric",
+      "answer": 58,
+      "placeholder": "the number"
+    }
+  ],
+  "reveal_text": "The angel's hand opens and a stone key tumbles out."
+}

@@ -1,0 +1,75 @@
+{
+  "id": "f7c_a",
+  "title": "The Shifting Floor",
+  "category": "logic",
+  "difficulty": "very_hard",
+  "steps": [
+    {
+      "prompt": "The floor is a 6 x 6 grid of tiles. A '#' tile has collapsed and cannot be stepped on. Starting on the top-left tile, you may only step RIGHT or DOWN. How many different routes lead to the bottom-right tile?",
+      "answer_type": "numeric",
+      "answer": 38,
+      "table": {
+        "columns": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "rows": [
+          [
+            ".",
+            ".",
+            ".",
+            ".",
+            ".",
+            "."
+          ],
+          [
+            "#",
+            ".",
+            ".",
+            "#",
+            ".",
+            "."
+          ],
+          [
+            ".",
+            "#",
+            ".",
+            ".",
+            ".",
+            "."
+          ],
+          [
+            ".",
+            ".",
+            ".",
+            ".",
+            ".",
+            "."
+          ],
+          [
+            ".",
+            ".",
+            ".",
+            ".",
+            ".",
+            "."
+          ],
+          [
+            ".",
+            "#",
+            ".",
+            "#",
+            ".",
+            "."
+          ]
+        ]
+      },
+      "placeholder": "number of routes"
+    }
+  ],
+  "reveal_text": "A tooth count is stamped on the gear: 4."
+}

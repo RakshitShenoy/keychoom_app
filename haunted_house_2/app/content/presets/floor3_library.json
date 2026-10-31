@@ -1,0 +1,118 @@
+{
+  "id": "floor3_library",
+  "floor": 3,
+  "title": "The Forbidden Library",
+  "intro": "Books breathe on the shelves. A reading lamp burns without oil. At the centre of the room a chained grimoire waits for the right code.",
+  "fragment": {
+    "id": "fragment_3",
+    "label": "Floor 3 Key Fragment",
+    "rune": "T"
+  },
+  "vault": {
+    "label": "Locked Grimoire",
+    "length": 4,
+    "code": "GER2",
+    "requires": [
+      "c_catalogue"
+    ],
+    "position": {
+      "x": 88,
+      "y": 72
+    }
+  },
+  "objects": [
+    {
+      "id": "a_atlas",
+      "type": "quiz",
+      "label": "Chained Atlas",
+      "icon": "📖",
+      "position": {
+        "x": 20,
+        "y": 30
+      },
+      "requires": [],
+      "vault_positions": [
+        0
+      ],
+      "quiz": {
+        "pool": "core_reasoning",
+        "questions": 5,
+        "time_limit_seconds": 150,
+        "pass_score": 3
+      },
+      "reward_text": "A page falls open. A date is circled in red ink: 6."
+    },
+    {
+      "id": "b_lamp",
+      "type": "puzzle",
+      "label": "Reading Lamp",
+      "icon": "🏮",
+      "position": {
+        "x": 78,
+        "y": 38
+      },
+      "puzzle": "f3l_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_catalogue",
+      "type": "puzzle",
+      "label": "Card Catalogue",
+      "icon": "🗄",
+      "position": {
+        "x": 44,
+        "y": 70
+      },
+      "puzzle": "f3l_c",
+      "requires": [
+        "a_atlas",
+        "b_lamp"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_bookcase",
+      "type": "trap",
+      "label": "Whispering Bookcase",
+      "icon": "📚",
+      "position": {
+        "x": 10,
+        "y": 82
+      },
+      "requires": [],
+      "reward_text": "The bookcase tilts and a face is pressed against the other side."
+    }
+  ],
+  "hints": {
+    "a_atlas": [
+      "This is a quick quiz of five reasoning questions. Read each one calmly.",
+      "You need 3 of the 5 right. The server keeps the clock, so do not dawdle.",
+      "If you fail you can try again with a fresh set of questions.",
+      "Answer the five questions and the reward shows a clue number. The vault's character number 1 is G."
+    ],
+    "b_lamp": [
+      "Start with the biggest group size (9) and list the numbers that leave the right remainder.",
+      "Check each of those numbers against the other conditions.",
+      "The answer is between 57 and 77.",
+      "The answer is 67. The vault's character number 2 is E."
+    ],
+    "c_catalogue": [
+      "Find P and Q in your clue notes first.",
+      "P x P + Q = 42.",
+      "Divide 42 by 11: it goes in 3 times.",
+      "The remainder is 9. The vault's characters number 3 and 4 are R and 2."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Chained Atlas, Reading Lamp, Card Catalogue.",
+      "The code reads GER2."
+    ]
+  }
+}

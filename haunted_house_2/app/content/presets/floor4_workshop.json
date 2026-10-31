@@ -1,0 +1,112 @@
+{
+  "id": "floor4_workshop",
+  "floor": 4,
+  "title": "The Dollmaker's Workshop",
+  "intro": "Rows of unfinished faces watch you from the workbench. The dollmaker never left. The porcelain cabinet at the end of the room holds the way on.",
+  "fragment": {
+    "id": "fragment_4",
+    "label": "Floor 4 Key Fragment",
+    "rune": "C"
+  },
+  "vault": {
+    "label": "Porcelain Cabinet",
+    "length": 4,
+    "code": "3ERS",
+    "requires": [
+      "c_machine"
+    ],
+    "position": {
+      "x": 84,
+      "y": 80
+    }
+  },
+  "objects": [
+    {
+      "id": "a_eyes",
+      "type": "puzzle",
+      "label": "Glass Eyes",
+      "icon": "👁",
+      "position": {
+        "x": 16,
+        "y": 74
+      },
+      "puzzle": "f4w_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_limbs",
+      "type": "puzzle",
+      "label": "Wooden Limbs",
+      "icon": "🦴",
+      "position": {
+        "x": 36,
+        "y": 24
+      },
+      "puzzle": "f4w_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_machine",
+      "type": "puzzle",
+      "label": "Sewing Machine",
+      "icon": "🧵",
+      "position": {
+        "x": 74,
+        "y": 48
+      },
+      "puzzle": "f4w_c",
+      "requires": [
+        "a_eyes",
+        "b_limbs"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_doll",
+      "type": "trap",
+      "label": "Half-Made Doll",
+      "icon": "🧸",
+      "position": {
+        "x": 54,
+        "y": 84
+      },
+      "requires": [],
+      "reward_text": "The half-made doll sits up and screams."
+    }
+  ],
+  "hints": {
+    "a_eyes": [
+      "Try assuming the first speaker is a knight and follow what that forces. If you hit a contradiction, they are a knave.",
+      "A statement from a knave must be FALSE. Negate it to learn something certain.",
+      "There are exactly 1 knights.",
+      "The knights are Brynn. The code is B. The vault's character number 1 is 3."
+    ],
+    "b_limbs": [
+      "There are 11 stones, so the number of ways to pick any pair is 11 x 10 / 2 = 55.",
+      "Count the pairs that give the wanted outcome, then divide by the total number of pairs.",
+      "Wanted pairs: 15 out of 55.",
+      "The probability is 3/11. The vault's character number 2 is E."
+    ],
+    "c_machine": [
+      "You need exactly (width) steps right and (height) steps up, in some order.",
+      "The number of routes is the number of ways to choose which steps are 'right'.",
+      "That is C(10, 5), the number of ways to choose 5 items from 10.",
+      "The answer is 252. The vault's characters number 3 and 4 are R and S."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Glass Eyes, Wooden Limbs, Sewing Machine.",
+      "The code reads 3ERS."
+    ]
+  }
+}

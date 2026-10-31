@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Player &middot; Escape the Haunted House{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Player rules</h2>
+  <ul class="rules">
+    <li>Enter the Game Code from your host and pick a display name.</li>
+    <li>Chat with everyone in the lobby until teams are formed.</li>
+    <li>Join a team using the Team Code from your team leader.</li>
+    <li>Solve every floor with your team and escape first. Dares are always safe.</li>
+  </ul>
+</div>
+
+<div class="card" id="join-card">
+  <h2>Join a game</h2>
+  <form id="join-form" autocomplete="off">
+    <label for="game_code">Game Code</label>
+    <input id="game_code" maxlength="{{ code_length + 2 }}" required autocapitalize="characters">
+    <label for="display_name">Display name (up to {{ max_name }} characters)</label>
+    <input id="display_name" maxlength="{{ max_name }}" required>
+    <button type="submit">Enter the house</button>
+  </form>
+  <p class="error" id="join-error"></p>
+</div>
+
+<div id="lobby" class="hidden">
+  <div class="card">
+    <h2>Welcome, <span id="me-name"></span> <span id="conn-status" class="badge conn" title="Live connection to the server">...</span></h2>
+    <p>Game <span class="code" style="font-size:1.2rem" id="game-code"></span> &middot; <strong id="lobby-state"></strong></p>
+    <p class="error" id="action-error"></p>
+    <ul class="muted" id="activity"></ul>
+    <button type="button" class="small danger" id="btn-leave">Leave lobby</button>
+  </div>
+
+  <div id="game" class="hidden"></div>
+
+  <div id="lobby-extras">
+  <div class="card hidden" id="my-team"></div>
+
+  <div class="card hidden" id="join-team-card">
+    <h2>Choose your team</h2>
+    <p class="muted">Ask your team leader for the Team Code.</p>
+    <div class="row">
+      <input id="team_code" placeholder="TEAM-XXXX" maxlength="20" autocomplete="off" autocapitalize="characters">
+      <button type="button" id="btn-join-team">JOIN TEAM</button>
+    </div>
+  </div>
+
+  <div class="card"><h2>Teams</h2><div class="teams" id="teams"></div></div>
+
+  <div class="card">
+    <h2>Lobby chat</h2>
+    <div class="chat" id="chat"></div>
+    <p class="closed" id="chat-closed"></p>
+    <div class="row" id="chat-form">
+      <input id="chat_body" maxlength="300" placeholder="Say something..." autocomplete="off">
+      <button type="button" id="btn-chat">Send</button>
+    </div>
+  </div>
+
+  <div class="card"><h2>Players</h2><ul class="players" id="players"></ul></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/realtime.js"></script><script src="/static/js/game.js"></script><script src="/static/js/player.js"></script>{% endblock %}

@@ -1,0 +1,15 @@
+{
+  "id": "f4w_c",
+  "title": "The Staircase of Choices",
+  "category": "mathematics",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "A courtyard is a grid. Its width is the number from the Glass Eyes and its height is the number from the Wooden Limbs, counted in steps. Starting at one corner you may only walk RIGHT or UP. How many different routes lead to the opposite corner?",
+      "answer_type": "numeric",
+      "answer": 252,
+      "placeholder": "number of routes"
+    }
+  ],
+  "reveal_text": "The needle stops and a cabinet key falls out of the bobbin."
+}

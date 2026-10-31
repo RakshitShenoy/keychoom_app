@@ -1,0 +1,27 @@
+{
+  "id": "f1_painting",
+  "title": "The Row of Ancestors",
+  "category": "deduction",
+  "difficulty": "medium",
+  "prompt": "Five ancestors hang in a row. Frames are numbered 1 to 5 from the left. Use the facts below. Then answer: which ancestor hangs in the frame the candle's smoke pointed to? (Check your clue notes.)",
+  "clues": [
+    "The Baron hangs at one end of the row.",
+    "The Baron hangs further left than the Widow.",
+    "The Doctor hangs somewhere to the left of the Widow.",
+    "The Maid hangs directly next to the Doctor and directly next to the Butler.",
+    "The Butler hangs somewhere to the right of the Doctor.",
+    "The Widow does not hang next to the Maid."
+  ],
+  "answer_type": "text",
+  "answer": "Maid",
+  "answers": [
+    "Maid",
+    "The Maid"
+  ],
+  "placeholder": "an ancestor's title",
+  "wrong_feedback": {
+    "butler": "That portrait is close by. Recount the frames from the left.",
+    "doctor": "That portrait is close by. Recount the frames from the left."
+  },
+  "reveal_text": "Behind the frame someone scratched a row of numbers into the plaster: 3, 4, 6, 10, 18 ... and then a blank. The vent's dial wants the next one."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "f6c_b",
+  "title": "The Row of Ancestors",
+  "category": "deduction",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "6 figures stand in a row of numbered chairs, numbered 1 to 6 from the left: the Baron, the Doctor, the Duke, the Heir, the Maid, the Priest. Use the clues, then answer: who stands in chair number 4? (Just the title, like Baron.)",
+      "answer_type": "text",
+      "answer": "heir",
+      "clues": [
+        "Exactly 4 chairs separate the Maid from the Doctor.",
+        "The Maid is somewhere to the left of the Doctor.",
+        "The Heir is NOT next to the Baron.",
+        "The Heir is NOT next to the Maid.",
+        "The Doctor is directly next to the Priest."
+      ],
+      "placeholder": "a title",
+      "answers": [
+        "The Heir"
+      ]
+    }
+  ],
+  "reveal_text": "The bell tolls and a number is cast into the bronze: 4."
+}

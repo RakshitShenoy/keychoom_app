@@ -1,0 +1,131 @@
+{
+  "id": "floor6_chapel",
+  "floor": 6,
+  "title": "The Ruined Chapel",
+  "intro": "Rain falls through a broken roof onto pews that have not held a congregation in centuries. The altar's reliquary is the next lock.",
+  "fragment": {
+    "id": "fragment_6",
+    "label": "Floor 6 Key Fragment",
+    "rune": "E"
+  },
+  "vault": {
+    "label": "Reliquary",
+    "length": 4,
+    "code": "K5HK",
+    "requires": [
+      "c_candles"
+    ],
+    "position": {
+      "x": 86,
+      "y": 74
+    }
+  },
+  "objects": [
+    {
+      "id": "a_glass",
+      "type": "puzzle",
+      "label": "Stained Glass",
+      "icon": "🪟",
+      "position": {
+        "x": 12,
+        "y": 60
+      },
+      "puzzle": "f6c_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_bell",
+      "type": "puzzle",
+      "label": "Church Bell",
+      "icon": "🔔",
+      "position": {
+        "x": 50,
+        "y": 24
+      },
+      "puzzle": "f6c_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_candles",
+      "type": "puzzle",
+      "label": "Altar Candles",
+      "icon": "🕯",
+      "position": {
+        "x": 68,
+        "y": 66
+      },
+      "puzzle": "f6c_c",
+      "requires": [
+        "a_glass",
+        "b_bell"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_confessional",
+      "type": "trap",
+      "label": "Confessional",
+      "icon": "🚪",
+      "position": {
+        "x": 30,
+        "y": 84
+      },
+      "requires": [],
+      "reward_text": "The confessional door bursts open. Something was listening."
+    },
+    {
+      "id": "dare_book",
+      "type": "dare",
+      "label": "Prayer Book",
+      "icon": "📕",
+      "position": {
+        "x": 88,
+        "y": 28
+      },
+      "requires": [],
+      "dare_pool": "core_dares",
+      "reward_text": "The spirit is amused. It whispers: 'Everything in this room is connected. Finish what you started.'"
+    }
+  ],
+  "hints": {
+    "a_glass": [
+      "Write the rule as a formula: next = previous + the one before that + a fixed extra.",
+      "Check it: 3 + 2 + 1 = 6. Keep going one generation at a time.",
+      "Generations 7, 8 and 9 are 43, 70, 114.",
+      "Generation 10 = 114 + 70 + 1 = 185. The vault's character number 1 is K."
+    ],
+    "b_bell": [
+      "Start with the clue that rules out the most positions, such as a figure at an end.",
+      "Work out which figures are certainly NOT next to each other, then try the possible arrangements.",
+      "From the left, the order begins: Maid, Baron.",
+      "The full row from the left is: Maid, Baron, Duke, Heir, Priest, Doctor. The answer is the Heir. The vault's character number 2 is 5."
+    ],
+    "c_candles": [
+      "Look up P and Q in your clue notes.",
+      "List the numbers above 47 that leave remainder 4 when divided by P.",
+      "Check each of them against the second condition (remainder 1 when divided by Q).",
+      "The answer is 49. The vault's characters number 3 and 4 are H and K."
+    ],
+    "dare_book": [
+      "A dare is optional and never needed to leave the floor.",
+      "It never costs you anything to skip it.",
+      "Do the dare only if you and your team are happy with it.",
+      "It never owns part of the vault code. Skip it freely."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Stained Glass, Church Bell, Altar Candles.",
+      "The code reads K5HK."
+    ]
+  }
+}

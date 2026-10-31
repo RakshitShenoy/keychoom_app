@@ -1,0 +1,15 @@
+{
+  "id": "f7a_c",
+  "title": "The Staircase of Choices",
+  "category": "mathematics",
+  "difficulty": "very_hard",
+  "steps": [
+    {
+      "prompt": "A courtyard is a grid. Its width is the number from the Hanging Herbs and its height is the number from the Old Broomstick, counted in steps. Starting at one corner you may only walk RIGHT or UP. How many different routes lead to the opposite corner?",
+      "answer_type": "numeric",
+      "answer": 462,
+      "placeholder": "number of routes"
+    }
+  ],
+  "reveal_text": "The cat's eyes flash green. A key is tied around its neck."
+}

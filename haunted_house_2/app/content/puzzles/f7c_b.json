@@ -1,0 +1,15 @@
+{
+  "id": "f7c_b",
+  "title": "The Counted Candles",
+  "category": "numerical_reasoning",
+  "difficulty": "very_hard",
+  "steps": [
+    {
+      "prompt": "A coven counts its candles. The total is more than 0 and at most 105. When they group the candles, there are 0 left over when grouped in 3s, 1 left over when grouped in 5s, 1 left over when grouped in 7s. How many candles are there?",
+      "answer_type": "numeric",
+      "answer": 36,
+      "placeholder": "number of candles"
+    }
+  ],
+  "reveal_text": "The pendulum swings out a word in the dust: 3."
+}

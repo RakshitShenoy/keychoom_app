@@ -1,0 +1,15 @@
+{
+  "id": "f5g_a",
+  "title": "The Growing Brood",
+  "category": "sequences",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "Each generation of bats is the sum of the two before it, plus 2 newcomers. The first generations are 1, 2, 5, 9, 16, 27, 45, 74 ... How many bats are in generation 10?",
+      "answer_type": "numeric",
+      "answer": 197,
+      "placeholder": "number of bats"
+    }
+  ],
+  "reveal_text": "Behind the canvas someone wrote a number: 3."
+}

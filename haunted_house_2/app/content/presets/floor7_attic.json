@@ -1,0 +1,112 @@
+{
+  "id": "floor7_attic",
+  "floor": 7,
+  "title": "The Witch's Attic",
+  "intro": "Bundles of herbs hang from the rafters. Spiders have woven a second ceiling. A trunk wrapped in chains sits under the one window of the attic.",
+  "fragment": {
+    "id": "fragment_7",
+    "label": "Floor 7 Key Fragment",
+    "rune": "R"
+  },
+  "vault": {
+    "label": "Hexed Trunk",
+    "length": 4,
+    "code": "6V5N",
+    "requires": [
+      "c_statue"
+    ],
+    "position": {
+      "x": 88,
+      "y": 72
+    }
+  },
+  "objects": [
+    {
+      "id": "a_herbs",
+      "type": "puzzle",
+      "label": "Hanging Herbs",
+      "icon": "🌿",
+      "position": {
+        "x": 20,
+        "y": 30
+      },
+      "puzzle": "f7a_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_broomstick",
+      "type": "puzzle",
+      "label": "Old Broomstick",
+      "icon": "🧹",
+      "position": {
+        "x": 78,
+        "y": 38
+      },
+      "puzzle": "f7a_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_statue",
+      "type": "puzzle",
+      "label": "Black Cat Statue",
+      "icon": "🐈‍⬛",
+      "position": {
+        "x": 44,
+        "y": 70
+      },
+      "puzzle": "f7a_c",
+      "requires": [
+        "a_herbs",
+        "b_broomstick"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_web",
+      "type": "trap",
+      "label": "Spider Web",
+      "icon": "🕸",
+      "position": {
+        "x": 10,
+        "y": 82
+      },
+      "requires": [],
+      "reward_text": "The web shivers. Something very large drops from the rafters."
+    }
+  ],
+  "hints": {
+    "a_herbs": [
+      "Try assuming the first speaker is a knight and follow what that forces. If you hit a contradiction, they are a knave.",
+      "A statement from a knave must be FALSE. Negate it to learn something certain.",
+      "There are exactly 1 knights.",
+      "The knights are Drusilla. The code is D. The vault's character number 1 is 6."
+    ],
+    "b_broomstick": [
+      "There are 6 stones, so the number of ways to pick any pair is 6 x 5 / 2 = 15.",
+      "Count the pairs that give the wanted outcome, then divide by the total number of pairs.",
+      "Wanted pairs: 9 out of 15.",
+      "The probability is 3/5. The vault's character number 2 is V."
+    ],
+    "c_statue": [
+      "You need exactly (width) steps right and (height) steps up, in some order.",
+      "The number of routes is the number of ways to choose which steps are 'right'.",
+      "That is C(11, 6), the number of ways to choose 6 items from 11.",
+      "The answer is 462. The vault's characters number 3 and 4 are 5 and N."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Hanging Herbs, Old Broomstick, Black Cat Statue.",
+      "The code reads 6V5N."
+    ]
+  }
+}

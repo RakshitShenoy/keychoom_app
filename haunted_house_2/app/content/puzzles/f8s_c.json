@@ -1,0 +1,22 @@
+{
+  "id": "f8s_c",
+  "title": "The Keyed Cipher",
+  "category": "cryptic",
+  "difficulty": "very_hard",
+  "steps": [
+    {
+      "prompt": "The final note is written in a keyed code. The KEYWORD is the word you found at the Obsidian Skull. To decode, write the keyword repeatedly under the message; for each letter, move the message letter BACK by the position of the key letter (A = 0, B = 1, C = 2 ... Z = 25). The message is DOAHMS. What does it say?",
+      "answer_type": "text",
+      "answer": "candle",
+      "placeholder": "the decoded word",
+      "success_message": "The message makes sense. One more twist remains."
+    },
+    {
+      "prompt": "Now add up the alphabet positions of the letters of the decoded word (A = 1, B = 2 ... Z = 26) and divide the total by P, the number from the Contract Scroll. What is the REMAINDER?",
+      "answer_type": "numeric",
+      "answer": 3,
+      "placeholder": "the remainder"
+    }
+  ],
+  "reveal_text": "A drawer opens that was not there before. Inside lies the final key."
+}

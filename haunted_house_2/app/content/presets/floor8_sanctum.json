@@ -1,0 +1,131 @@
+{
+  "id": "floor8_sanctum",
+  "floor": 8,
+  "title": "The Final Sanctum",
+  "intro": "The walls pulse like something alive. A heart beats under the floor. Whatever lives here will not let you leave easily, and the Heart Vault is the last lock before the final door.",
+  "fragment": {
+    "id": "fragment_8",
+    "label": "Floor 8 Key Fragment",
+    "rune": "Y"
+  },
+  "vault": {
+    "label": "Heart Vault",
+    "length": 4,
+    "code": "86PN",
+    "requires": [
+      "c_altar"
+    ],
+    "position": {
+      "x": 86,
+      "y": 74
+    }
+  },
+  "objects": [
+    {
+      "id": "a_stone",
+      "type": "puzzle",
+      "label": "Beating Heart Stone",
+      "icon": "🫀",
+      "position": {
+        "x": 12,
+        "y": 60
+      },
+      "puzzle": "f8z_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_throne",
+      "type": "puzzle",
+      "label": "Chained Throne",
+      "icon": "👑",
+      "position": {
+        "x": 50,
+        "y": 24
+      },
+      "puzzle": "f8z_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_altar",
+      "type": "puzzle",
+      "label": "Bone Altar",
+      "icon": "🦴",
+      "position": {
+        "x": 68,
+        "y": 66
+      },
+      "puzzle": "f8z_c",
+      "requires": [
+        "a_stone",
+        "b_throne"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_wall",
+      "type": "trap",
+      "label": "Screaming Wall",
+      "icon": "🧱",
+      "position": {
+        "x": 30,
+        "y": 84
+      },
+      "requires": [],
+      "reward_text": "A face pushes out of the wall and screams."
+    },
+    {
+      "id": "dare_torch",
+      "type": "dare",
+      "label": "Whispering Torch",
+      "icon": "🔥",
+      "position": {
+        "x": 88,
+        "y": 28
+      },
+      "requires": [],
+      "dare_pool": "core_dares",
+      "reward_text": "The spirit is amused. It whispers: 'Everything in this room is connected. Finish what you started.'"
+    }
+  ],
+  "hints": {
+    "a_stone": [
+      "Start with the biggest group size (5) and list the numbers that leave the right remainder.",
+      "Check each of those numbers against the other conditions.",
+      "The answer is between 49 and 69.",
+      "The answer is 59. The vault's character number 1 is 8."
+    ],
+    "b_throne": [
+      "First count ALL different arrangements of the tiles. Repeated letters divide the count.",
+      "There are 2520 different arrangements in total.",
+      "Count the arrangements that break the rule, then subtract (or count the good ones directly).",
+      "The answer is 1800. The vault's character number 2 is 6."
+    ],
+    "c_altar": [
+      "Look up P and Q in your clue notes.",
+      "List the numbers above 60 that leave remainder 4 when divided by P.",
+      "Check each of them against the second condition (remainder 2 when divided by Q).",
+      "The answer is 74. The vault's characters number 3 and 4 are P and N."
+    ],
+    "dare_torch": [
+      "A dare is optional and never needed to leave the floor.",
+      "It never costs you anything to skip it.",
+      "Do the dare only if you and your team are happy with it.",
+      "It never owns part of the vault code. Skip it freely."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Beating Heart Stone, Chained Throne, Bone Altar.",
+      "The code reads 86PN."
+    ]
+  }
+}

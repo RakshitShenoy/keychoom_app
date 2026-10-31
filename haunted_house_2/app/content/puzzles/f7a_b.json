@@ -1,0 +1,15 @@
+{
+  "id": "f7a_b",
+  "title": "The Urn of Souls",
+  "category": "probability",
+  "difficulty": "very_hard",
+  "steps": [
+    {
+      "prompt": "An urn holds 2 red, 4 black soul-stones. Two stones are drawn one after the other WITHOUT putting the first back. What is the probability that they are at least one red stone? Give a fraction (like 3/10) or a decimal.",
+      "answer_type": "numeric",
+      "answer": "3/5",
+      "placeholder": "e.g. 3/10"
+    }
+  ],
+  "reveal_text": "The bristles spell out a word in the dust: 5."
+}

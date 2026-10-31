@@ -1,0 +1,49 @@
+{
+  "id": "f8s_a",
+  "title": "The Cursed Tile Square",
+  "category": "patterns",
+  "difficulty": "very_hard",
+  "steps": [
+    {
+      "prompt": "A 4 x 4 floor of tiles is numbered so that every row and every column contains each of 1, 2, 3 and 4 exactly once. Some tiles have crumbled to '?'. Read the numbers of ROW 1 from left to right as a 4-digit code.",
+      "answer_type": "code",
+      "answer": "1243",
+      "table": {
+        "columns": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "rows": [
+          [
+            "1",
+            "?",
+            "?",
+            "3"
+          ],
+          [
+            "?",
+            "?",
+            "?",
+            "1"
+          ],
+          [
+            "?",
+            "?",
+            "2",
+            "?"
+          ],
+          [
+            "?",
+            "?",
+            "?",
+            "?"
+          ]
+        ]
+      },
+      "placeholder": "4 digits"
+    }
+  ],
+  "reveal_text": "One clause is underlined in blood. It contains the number 4."
+}

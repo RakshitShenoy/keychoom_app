@@ -1,0 +1,22 @@
+{
+  "id": "f7a_a",
+  "title": "The Island of Liars",
+  "category": "logic",
+  "difficulty": "very_hard",
+  "steps": [
+    {
+      "prompt": "In the haunted village, every resident is either a KNIGHT (always tells the truth) or a KNAVE (always lies). 5 residents speak. Work out who is who. Answer with the first letters of the names of all the KNIGHTS in alphabetical order, with no spaces (for example AC).",
+      "answer_type": "code",
+      "answer": "D",
+      "clues": [
+        "Aldric says: \"Exactly one of Hester and Fenella is a knight.\"",
+        "Drusilla says: \"Aldric is a knave.\"",
+        "Fenella says: \"Gideon is a knight.\"",
+        "Gideon says: \"Drusilla and Hester are both knaves.\"",
+        "Hester says: \"Gideon is a knight.\""
+      ],
+      "placeholder": "initials of the knights"
+    }
+  ],
+  "reveal_text": "One bundle is tied with a thread knotted into a number: 6."
+}

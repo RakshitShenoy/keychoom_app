@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="landing">
+  <h2 class="landing-q">Who are you tonight?</h2>
+  <div class="choices landing-choices">
+    <div class="card choice">
+      <h3>Host</h3>
+      <p class="muted">Run the night. Create the lobby, appoint team leaders, start the game and watch every team on the dashboard.</p>
+      <a class="btn" href="/host">HOST</a>
+    </div>
+    <div class="card choice">
+      <h3>Player</h3>
+      <p class="muted">Enter the house with a Game Code. Join a team and solve eight floors before anyone else escapes.</p>
+      <a class="btn" href="/player">PLAYER</a>
+    </div>
+  </div>
+  <p class="muted landing-note">The host runs the game and does not take part in puzzles. Players solve the house.</p>
+</section>
+{% endblock %}

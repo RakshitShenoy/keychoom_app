@@ -1,0 +1,15 @@
+{
+  "id": "f3l_c",
+  "title": "The Remainder Seal",
+  "category": "numerical_reasoning",
+  "difficulty": "medium_plus",
+  "steps": [
+    {
+      "prompt": "Let P be the number found at the Chained Atlas and Q the number found at the Reading Lamp. The seal turns to the remainder when P x P + Q is divided by 11. What is that remainder?",
+      "answer_type": "numeric",
+      "answer": 9,
+      "placeholder": "the remainder"
+    }
+  ],
+  "reveal_text": "A drawer slides out and a heavy iron key is lying where a card should be."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "f5b_b",
+  "title": "The Tolling Bell",
+  "category": "sequences",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "The clock tower tolls a growing number of times each hour: 8, 15, 24, 35, 48, 63 ... How many tolls will it make at the 12th hour?",
+      "answer_type": "numeric",
+      "answer": 195,
+      "placeholder": "number of tolls"
+    }
+  ],
+  "reveal_text": "A crystal drops and shatters. In the fragments you read the number 4."
+}

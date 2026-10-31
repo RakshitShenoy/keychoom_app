@@ -1,0 +1,15 @@
+{
+  "id": "f1_candle",
+  "title": "The Two Candles",
+  "category": "mathematics",
+  "difficulty": "medium",
+  "prompt": "Two candles of the same length are lit at the same moment and burn at a steady rate. The thick candle burns out completely after 6 hours; the thin candle burns out after 4 hours. After how many hours is the thick candle exactly twice as long as the thin one?",
+  "answer_type": "numeric",
+  "answer": 3,
+  "placeholder": "hours",
+  "wrong_feedback": {
+    "2": "At 2 hours the thick candle is 2/3 long and the thin one 1/2 long. Not yet a ratio of two.",
+    "4": "At 4 hours the thin candle is already gone."
+  },
+  "reveal_text": "The thin candle gutters out. Its smoke bends toward the portraits on the wall and points at the THIRD frame from the left."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "f4w_b",
+  "title": "The Urn of Souls",
+  "category": "probability",
+  "difficulty": "hard",
+  "steps": [
+    {
+      "prompt": "An urn holds 4 red, 3 black and 4 green soul-stones. Two stones are drawn one after the other WITHOUT putting the first back. What is the probability that they are the same colour? Give a fraction (like 3/10) or a decimal.",
+      "answer_type": "numeric",
+      "answer": "3/11",
+      "placeholder": "e.g. 3/10"
+    }
+  ],
+  "reveal_text": "Stamped on a limb: batch number 5."
+}

@@ -1,0 +1,112 @@
+{
+  "id": "floor3_seance",
+  "floor": 3,
+  "title": "The Reading Room Seance",
+  "intro": "A round table, thirteen chairs and a single planchette that moves on its own. The chest beneath the table will only open for someone who has spoken to the dead.",
+  "fragment": {
+    "id": "fragment_3",
+    "label": "Floor 3 Key Fragment",
+    "rune": "T"
+  },
+  "vault": {
+    "label": "Spirit Board Chest",
+    "length": 4,
+    "code": "X4RP",
+    "requires": [
+      "c_curtain"
+    ],
+    "position": {
+      "x": 82,
+      "y": 84
+    }
+  },
+  "objects": [
+    {
+      "id": "a_board",
+      "type": "puzzle",
+      "label": "Spirit Board",
+      "icon": "🔮",
+      "position": {
+        "x": 10,
+        "y": 40
+      },
+      "puzzle": "f3s_a",
+      "requires": [],
+      "vault_positions": [
+        0
+      ]
+    },
+    {
+      "id": "b_ball",
+      "type": "puzzle",
+      "label": "Crystal Ball",
+      "icon": "🔮",
+      "position": {
+        "x": 62,
+        "y": 20
+      },
+      "puzzle": "f3s_b",
+      "requires": [],
+      "vault_positions": [
+        1
+      ]
+    },
+    {
+      "id": "c_curtain",
+      "type": "puzzle",
+      "label": "Velvet Curtain",
+      "icon": "🎭",
+      "position": {
+        "x": 40,
+        "y": 68
+      },
+      "puzzle": "f3s_c",
+      "requires": [
+        "a_board",
+        "b_ball"
+      ],
+      "vault_positions": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "trap_chair",
+      "type": "trap",
+      "label": "Empty Chair",
+      "icon": "🪑",
+      "position": {
+        "x": 88,
+        "y": 54
+      },
+      "requires": [],
+      "reward_text": "The chair turns slowly towards you. It is not empty."
+    }
+  ],
+  "hints": {
+    "a_board": [
+      "Start with the clue that rules out the most positions, such as a figure at an end.",
+      "Work out which figures are certainly NOT next to each other, then try the possible arrangements.",
+      "From the left, the order begins: Butler, Heir.",
+      "The full row from the left is: Butler, Heir, Cook, Doctor, Duke. The answer is the Doctor. The vault's character number 1 is X."
+    ],
+    "b_ball": [
+      "There are 8 stones, so the number of ways to pick any pair is 8 x 7 / 2 = 28.",
+      "Count the pairs that give the wanted outcome, then divide by the total number of pairs.",
+      "Wanted pairs: 13 out of 28.",
+      "The probability is 13/28. The vault's character number 2 is 4."
+    ],
+    "c_curtain": [
+      "Find P and Q in your clue notes first.",
+      "P x P + Q = 28.",
+      "Divide 28 by 7: it goes in 4 times.",
+      "The remainder is 0. The vault's characters number 3 and 4 are R and P."
+    ],
+    "vault": [
+      "The code has four characters. Some are letters, some are digits.",
+      "Each solved object revealed part of the code. Check the vault display.",
+      "The pieces go in the order they sit on the vault: Spirit Board, Crystal Ball, Velvet Curtain.",
+      "The code reads X4RP."
+    ]
+  }
+}

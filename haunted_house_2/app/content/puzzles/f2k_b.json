@@ -1,0 +1,15 @@
+{
+  "id": "f2k_b",
+  "title": "The Cursed Price Tag",
+  "category": "mathematics",
+  "difficulty": "medium",
+  "steps": [
+    {
+      "prompt": "A cursed lantern costs 800 coins. The seller raises the price by 40%, then, taking pity, cuts the NEW price by 25%. What is the final price in coins?",
+      "answer_type": "numeric",
+      "answer": "840",
+      "placeholder": "coins"
+    }
+  ],
+  "reveal_text": "The blade is etched with a tally. The last mark is a number: 4."
+}
