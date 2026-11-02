@@ -12,6 +12,12 @@ class JoinGameRequest(BaseModel):
     display_name: str
 
 
+class HostPlayRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    display_name: str
+
+
 class JoinGameResponse(BaseModel):
     player_id: str
     game_id: str

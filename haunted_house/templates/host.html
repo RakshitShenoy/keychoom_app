@@ -16,13 +16,30 @@
   <form id="create-form">
     <label for="team_count">Number of teams ({{ min_teams }}&ndash;{{ max_teams }})</label>
     <input id="team_count" type="number" min="{{ min_teams }}" max="{{ max_teams }}" value="{{ min_teams }}">
-    <label for="min_players_per_team">Minimum players per team ({{ min_players }}&ndash;{{ max_players }})</label>
-    <input id="min_players_per_team" type="number" min="{{ min_players }}" max="{{ max_players }}" value="{{ min_players }}">
-    <label for="max_players_per_team">Maximum players per team ({{ min_players }}&ndash;{{ max_players }})</label>
+    <label for="max_players_per_team">Player capacity per team ({{ min_players }}&ndash;{{ max_players }})</label>
     <input id="max_players_per_team" type="number" min="{{ min_players }}" max="{{ max_players }}" value="{{ max_players }}">
+    <fieldset class="seg-field">
+      <legend>Number of Floors</legend>
+      <div class="seg" role="radiogroup" aria-label="Number of Floors">
+        {% for n in range(min_floors, max_floors + 1) %}
+        <label class="seg-opt"><input type="radio" name="floor_count" value="{{ n }}"{% if n == max_floors %} checked{% endif %}><span>{{ n }}</span></label>
+        {% endfor %}
+      </div>
+      <p class="muted">The game is exactly this many floors. It cannot be changed once the game starts.</p>
+    </fieldset>
+    <fieldset class="seg-field">
+      <legend>Host Gameplay</legend>
+      <div class="seg" role="radiogroup" aria-label="Host Gameplay">
+        <label class="seg-opt wide"><input type="radio" name="host_plays" value="no" checked><span>Host Only</span></label>
+        <label class="seg-opt wide"><input type="radio" name="host_plays" value="yes"><span>Play as Player</span></label>
+      </div>
+      <p class="muted">Play as Player: join the game as a normal player after the game starts. You still set the game up here; once it starts your screen becomes the player screen and the host dashboard closes.</p>
+    </fieldset>
+    <p class="muted" id="min-rule">Every team must have at least {{ min_players }} player{{ "" if min_players == 1 else "s" }} before the game can start.
+      The smallest valid game is {{ min_teams }} teams &times; {{ min_players }} player{{ "" if min_players == 1 else "s" }} = {{ min_teams * min_players }} players.</p>
     <label for="base_duration_minutes">Base game duration in minutes ({{ min_minutes }}&ndash;{{ max_minutes }})</label>
     <input id="base_duration_minutes" type="number" min="{{ min_minutes }}" max="{{ max_minutes }}" value="90" placeholder="{{ default_minutes }}">
-    <p class="muted">Eight floors take a while: 90 minutes is a good start for the full building.</p>
+    <p class="muted">A full 8-floor building takes a while: 90 minutes is a good start. Fewer floors need less time.</p>
     <button type="submit">Create lobby</button>
   </form>
   <p class="error" id="create-error"></p>
@@ -32,7 +49,7 @@
   <div class="card">
     <h2>Your lobby <span id="conn-status" class="badge conn" title="Live connection to the server">...</span></h2>
     <div class="code" id="game-code"></div>
-    <p>State: <strong id="lobby-state"></strong> &middot; Players: <strong id="player-count"></strong></p>
+    <p>State: <strong id="lobby-state"></strong> <span id="ready-badge" class="badge">-</span> &middot; Players: <strong id="player-count"></strong></p>
     <div class="row">
       <button type="button" id="btn-start">START TEAM FORMATION</button>
       <button type="button" id="btn-lock">LOCK TEAM FORMATION</button>
@@ -42,6 +59,22 @@
     <p class="error" id="action-error"></p>
     <ul class="problems" id="problems"></ul>
     <ul class="muted" id="activity"></ul>
+    <p class="muted" id="plan-summary"></p>
+  </div>
+
+  <div class="card hidden" id="host-play-card">
+    <h2>Your player</h2>
+    <div id="host-play-join">
+      <p class="muted">You chose to play. Pick a display name to join as a normal player, then join a team with a Team Code (or ask to be made a leader).</p>
+      <div class="row"><input id="host_play_name" maxlength="24" placeholder="Your player name" autocomplete="off">
+        <button type="button" id="btn-host-play">JOIN AS PLAYER</button></div>
+    </div>
+    <div id="host-play-team" class="hidden">
+      <p>Playing as <strong id="host-play-me"></strong>. <span id="host-play-status" class="muted"></span></p>
+      <div class="row" id="host-play-code-row"><input id="host_team_code" placeholder="TEAM-XXXX" maxlength="20" autocomplete="off" autocapitalize="characters">
+        <button type="button" id="btn-host-join-team">JOIN TEAM</button></div>
+    </div>
+    <p class="error" id="host-play-error"></p>
   </div>
 
   <div class="card hidden" id="dash-card">

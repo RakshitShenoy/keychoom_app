@@ -16,6 +16,7 @@ from app.db.enums import JOINABLE_GAME_STATUSES, GameStatus
 from app.db.ids import new_id
 from app.db.models import Game, GameEvent, Player
 from app.errors import AppError
+from app.game import presets as pr
 from app.lobby.codes import (
     GameCodeGenerationError,
     generate_unique_game_code,
@@ -49,6 +50,8 @@ class GameConfig:
     max_players_per_team: int
     base_duration_seconds: int
     team_count: int
+    floor_count: int = pr.TOTAL_FLOORS
+    host_plays: bool = False
 
 
 def resolve_game_config(settings: "Settings", payload: GameCreateRequest) -> GameConfig:
@@ -65,7 +68,12 @@ def resolve_game_config(settings: "Settings", payload: GameCreateRequest) -> Gam
         base_duration_seconds=pick(payload.base_duration_seconds, settings.default_base_duration_seconds),
         team_count=0,  # filled in below (its default depends on max_teams)
     )
-    cfg = GameConfig(**{**cfg.__dict__, "team_count": pick(payload.team_count, cfg.max_teams)})
+    cfg = GameConfig(**{
+        **cfg.__dict__,
+        "team_count": pick(payload.team_count, cfg.max_teams),
+        "floor_count": pick(payload.floor_count, pr.DEFAULT_FLOOR_COUNT),
+        "host_plays": bool(payload.host_plays) if payload.host_plays is not None else False,
+    })
 
     errors: list[dict[str, str]] = []
 
@@ -80,6 +88,7 @@ def resolve_game_config(settings: "Settings", payload: GameCreateRequest) -> Gam
         errors.append(
             {"field": "team_count", "message": "must be between min_teams and max_teams"}
         )
+    check_range("floor_count", cfg.floor_count, pr.MIN_FLOORS, pr.TOTAL_FLOORS)
     check_range(
         "min_players_per_team", cfg.min_players_per_team,
         settings.min_players_limit, settings.max_players_limit,
@@ -133,6 +142,10 @@ def create_game(db: Session, settings: "Settings", payload: GameCreateRequest) -
             max_players_per_team=cfg.max_players_per_team,
             base_duration_seconds=cfg.base_duration_seconds,
             team_count=cfg.team_count,
+            floor_count=cfg.floor_count,
+            # drawn ONCE, here, from OS entropy; stored; never reshuffled and never sent to players
+            floor_order=pr.generate_floor_order(cfg.floor_count),
+            host_plays=cfg.host_plays,
             created_at=now,
         )
         db.add(game)
@@ -155,8 +168,22 @@ def create_game(db: Session, settings: "Settings", payload: GameCreateRequest) -
     raise AppError(503, "GAME_CODE_UNAVAILABLE", "Could not allocate a game code.")
 
 
+def join_game_as_host(db: Session, settings: "Settings", game: Game, display_name: str) -> tuple[Player, Game, str]:
+    """The host's own player ("Play as Player"). Same name, capacity and status rules as everybody."""
+    with _join_lock:
+        fresh = db.scalar(select(Game).where(Game.id == game.id).execution_options(populate_existing=True))
+        if fresh is None or not fresh.host_plays:
+            raise AppError(409, "HOST_PLAY_DISABLED", "This game was not set up for the host to play.")
+        existing = db.scalar(
+            select(Player.id).where(Player.game_id == fresh.id, Player.is_host_player.is_(True))
+        )
+        if existing is not None:
+            raise AppError(409, "HOST_ALREADY_PLAYING", "You are already playing in this game.")
+    return join_game(db, settings, fresh.game_code, display_name, is_host_player=True)
+
+
 def join_game(
-    db: Session, settings: "Settings", game_code: str, display_name: str
+    db: Session, settings: "Settings", game_code: str, display_name: str, *, is_host_player: bool = False
 ) -> tuple[Player, Game, str]:
     """Create an anonymous player session. Returns (player, game, plaintext token)."""
     try:
@@ -203,6 +230,7 @@ def join_game(
             session_token_hash=hash_token(token, settings.secret_key),
             session_expires_at=now + timedelta(seconds=settings.player_session_ttl_seconds),
             pawn_color=random_pawn_color(),
+            is_host_player=is_host_player,
             is_connected=False,
             joined_at=now,
             last_seen_at=now,

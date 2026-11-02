@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, Request
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from app.auth.hostplay import host_is_playing, host_player
 from app.auth.sessions import resolve_host_game, resolve_player
 from app.db.models import Player
 from app.db.session import get_db
@@ -40,6 +41,10 @@ def me(request: Request, db: Session = Depends(get_db)) -> MeResponse:
             game_code=game.game_code,
             status=game.status,
             team_count=game.team_count,
+            floor_count=game.floor_count,
+            host_plays=bool(game.host_plays),
+            host_player_joined=host_player(db, game) is not None,
+            host_is_playing=host_is_playing(db, game),
             config=game_config_out(game),
             player_count=player_count or 0,
         )

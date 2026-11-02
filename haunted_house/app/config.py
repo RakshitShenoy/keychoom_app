@@ -49,7 +49,9 @@ class Settings(BaseSettings):
     # --- global game limits -------------------------------------------------
     min_teams_limit: int = Field(3, ge=1)
     max_teams_limit: int = Field(25, ge=1)
-    min_players_limit: int = Field(3, ge=1)
+    # Official rule (Phase 12): the smallest valid game is 3 teams x 1 player. Every team still needs
+    # a leader and at least this many players before the host can lock formation / start the game.
+    min_players_limit: int = Field(1, ge=1)
     max_players_limit: int = Field(10, ge=1)
     min_base_duration_seconds: int = Field(300, ge=1)
     max_base_duration_seconds: int = Field(14400, ge=1)

@@ -36,7 +36,7 @@ CLOSE_HEARTBEAT = 4408
 CLOSE_TOO_SLOW = 4429
 
 # Error codes that tell the browser NOT to reconnect
-FATAL_ERROR_CODES = frozenset({"NOT_AUTHENTICATED", "NOT_AUTHORIZED", "KICKED"})
+FATAL_ERROR_CODES = frozenset({"NOT_AUTHENTICATED", "NOT_AUTHORIZED", "KICKED", "HOST_IS_PLAYING"})
 
 
 def _envelope(message_type: str, **fields: Any) -> dict[str, Any]:

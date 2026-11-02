@@ -26,7 +26,32 @@
       return;
     }
     $("action-error").textContent = "";
+    if (res.data && res.data.you && res.data.you.role === "player") {  // the game started and I am playing
+      window.location.href = "/player";
+      return;
+    }
     render(res.data, true);
+  }
+
+  // ---- Phase 13: "Play as Player". The server owns every rule; this only shows state and sends intents.
+  let myPlayerName = null;
+  async function refreshHostPlay(lobby) {
+    const card = $("host-play-card");
+    const show = !!lobby.host_plays && lobby.game_status !== "RUNNING" && lobby.game_status !== "FINISHED";
+    card.classList.toggle("hidden", !show);
+    if (!show) { return; }
+    const me = await HH.api("/api/me");
+    const mine = me.ok && me.data.player && me.data.host && me.data.player.game_code === me.data.host.game_code
+      ? me.data.player : null;
+    myPlayerName = mine ? mine.display_name : null;
+    $("host-play-join").classList.toggle("hidden", !!mine);
+    $("host-play-team").classList.toggle("hidden", !mine);
+    if (!mine) { return; }
+    $("host-play-me").textContent = mine.display_name;
+    const row = lobby.players.find(function (p) { return p.display_name === mine.display_name; });
+    const team = row && row.team_name;
+    $("host-play-status").textContent = team ? "Team: " + team + (row.role === "LEADER" ? " (leader)" : "") : "No team yet.";
+    $("host-play-code-row").classList.toggle("hidden", !!team);
   }
 
   function leaderCandidates(lobby, team) {
@@ -83,11 +108,18 @@
     $("lobby").classList.remove("hidden");
     $("game-code").textContent = lobby.game_code;
     $("lobby-state").textContent = lobby.lobby_state;
-    $("player-count").textContent = lobby.counts.player_count + " (need " +
-      lobby.counts.min_total_players + "-" + lobby.counts.max_total_players + ", room for " +
+    const readyBadge = $("ready-badge");
+    const isReady = lobby.readiness.requirements_met && lobby.team_formation_locked;
+    readyBadge.textContent = isReady ? "READY" : "NOT READY";
+    readyBadge.className = "badge " + (isReady ? "ready-yes" : "ready-no");
+    $("player-count").textContent = lobby.counts.player_count + " (at least " +
+      lobby.counts.min_total_players + " needed: one per team, room for " +
       lobby.counts.capacity + ")";
 
     if ((lobby.game_status === "RUNNING" || lobby.game_status === "FINISHED") && !dash) { loadDashboard(); }
+    $("plan-summary").textContent = lobby.floor_count + " floors. " +
+      (lobby.host_plays ? "You will play as a player once the game starts." : "You are hosting only.");
+    refreshHostPlay(lobby);
     const a = lobby.host_actions;
     $("btn-start").disabled = !a.can_start_formation;
     $("btn-lock").disabled = !a.can_lock;
@@ -307,7 +339,8 @@
         HH.logActivity($("activity"), HH.describeEvent(type, payload));
       },
       onStatus: function (s) { HH.showConnectionStatus($("conn-status"), s); },
-      onFatal: function () {
+      onFatal: function (code2) {
+        if (code2 === "HOST_IS_PLAYING") { window.location.href = "/player"; return; }
         $("action-error").textContent = "Your host session is no longer valid. Reload and create a new lobby.";
       }
     });
@@ -330,10 +363,14 @@
   $("create-form").addEventListener("submit", async function (event) {
     event.preventDefault();
     const body = {};
-    ["team_count", "min_players_per_team", "max_players_per_team"].forEach(function (field) {
+    ["team_count", "max_players_per_team"].forEach(function (field) {
       const raw = $(field).value.trim();
       if (raw !== "") { body[field] = Number(raw); }
     });
+    const floors = document.querySelector('input[name="floor_count"]:checked');
+    if (floors) { body.floor_count = Number(floors.value); }
+    const plays = document.querySelector('input[name="host_plays"]:checked');
+    body.host_plays = !!plays && plays.value === "yes";
     const minutes = $("base_duration_minutes").value.trim();
     if (minutes !== "") { body.base_duration_seconds = Math.round(Number(minutes) * 60); }
 
@@ -345,6 +382,27 @@
 
   (async function restoreSession() {
     const res = await HH.api("/api/me");
+    if (res.ok && res.data.host && res.data.host.host_is_playing && res.data.player) {
+      window.location.href = "/player";  // the game is running and I play: the host screen is closed
+      return;
+    }
     if (res.ok && res.data.host) { start(res.data.host.game_code); }
   })();
+
+  $("btn-host-play").addEventListener("click", async function () {
+    const res = await HH.api(lobbyUrl("/host/play"), "POST", { display_name: $("host_play_name").value });
+    if (!res.ok) { HH.showError($("host-play-error"), res); return; }
+    $("host-play-error").textContent = "";
+    if (rt) { rt.requestState(); }
+    const lobby = await HH.api(lobbyUrl("/lobby"));
+    if (lobby.ok) { render(lobby.data, true); }
+  });
+  $("btn-host-join-team").addEventListener("click", async function () {
+    const res = await HH.api(lobbyUrl("/teams/join"), "POST", { team_code: $("host_team_code").value });
+    if (!res.ok) { HH.showError($("host-play-error"), res); return; }
+    $("host-play-error").textContent = "";
+    $("host_team_code").value = "";
+    const lobby = await HH.api(lobbyUrl("/lobby"));
+    if (lobby.ok) { render(lobby.data, true); }
+  });
 })();

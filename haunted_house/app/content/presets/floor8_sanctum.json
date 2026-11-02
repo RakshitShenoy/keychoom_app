@@ -2,7 +2,7 @@
   "id": "floor8_sanctum",
   "floor": 8,
   "title": "The Final Sanctum",
-  "intro": "The walls pulse like something alive. A heart beats under the floor. Whatever lives here will not let you leave easily, and the Heart Vault is the last lock before the final door.",
+  "intro": "The walls pulse like something alive. A heart beats under the floor. Whatever lives here will not let you leave easily, and the Heart Vault guards the key fragment.",
   "fragment": {
     "id": "fragment_8",
     "label": "Floor 8 Key Fragment",

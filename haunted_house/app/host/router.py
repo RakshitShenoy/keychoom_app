@@ -5,6 +5,8 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.auth.dependencies import require_host
+from app.auth.hostplay import host_is_playing
+from app.errors import AppError
 from app.auth.router import game_config_out
 from app.db.models import Game, Player
 from app.db.session import get_db
@@ -16,6 +18,8 @@ router = APIRouter(tags=["host"])
 @router.get("/api/host/game", response_model=HostGameResponse)
 def host_game(game: Game = Depends(require_host), db: Session = Depends(get_db)) -> HostGameResponse:
     """Minimal host view of the lobby (the full dashboard arrives in a later phase)."""
+    if host_is_playing(db, game):
+        raise AppError(403, "HOST_IS_PLAYING", "You are playing in this game, so the host view is closed.")
     players = db.scalars(
         select(Player).where(Player.game_id == game.id).order_by(Player.joined_at, Player.id)
     ).all()

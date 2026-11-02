@@ -24,7 +24,7 @@ def test_team_count_outside_global_limits_rejected(make_game, count):
 @pytest.mark.parametrize(
     "overrides,field",
     [
-        ({"min_players_per_team": 2}, "min_players_per_team"),
+        ({"min_players_per_team": 0}, "min_players_per_team"),
         ({"max_players_per_team": 11}, "max_players_per_team"),
         ({"min_players_per_team": 6, "max_players_per_team": 4}, "max_players_per_team"),
         ({"team_count": 3, "min_teams": 4, "max_teams": 6}, "team_count"),

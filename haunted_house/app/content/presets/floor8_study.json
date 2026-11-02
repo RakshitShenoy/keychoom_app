@@ -2,7 +2,7 @@
   "id": "floor8_study",
   "floor": 8,
   "title": "The Demon's Study",
-  "intro": "The last room before the final door. Black candles burn in a ring. A demon's contracts cover the desk and the safe under the pentagram holds the last fragment.",
+  "intro": "Black candles burn in a ring. A demon's contracts cover the desk and the safe under the pentagram holds the key fragment.",
   "fragment": {
     "id": "fragment_8",
     "label": "Floor 8 Key Fragment",

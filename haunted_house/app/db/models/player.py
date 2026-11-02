@@ -32,6 +32,8 @@ class Player(Base):
 
     pawn_color: Mapped[str] = mapped_column(String(7))
     is_connected: Mapped[bool] = mapped_column(Boolean, default=False)
+    # Phase 13: True only for the player row the host created for themself (host "Play as Player").
+    is_host_player: Mapped[bool] = mapped_column(Boolean, default=False, server_default="0")
     joined_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow)
     last_seen_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow)
 

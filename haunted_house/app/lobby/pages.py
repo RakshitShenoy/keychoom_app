@@ -4,6 +4,8 @@ from __future__ import annotations
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
+from app.game.presets import MIN_FLOORS, TOTAL_FLOORS
+
 router = APIRouter(include_in_schema=False)
 
 
@@ -26,6 +28,8 @@ def host_page(request: Request):
             "min_minutes": s.min_base_duration_seconds // 60,
             "max_minutes": s.max_base_duration_seconds // 60,
             "default_minutes": s.default_base_duration_seconds // 60,
+            "min_floors": MIN_FLOORS,
+            "max_floors": TOTAL_FLOORS,
         },
     )
 

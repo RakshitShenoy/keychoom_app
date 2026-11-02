@@ -67,9 +67,57 @@ def fragment_id_for(floor: int) -> str:
     return f"fragment_{floor}"
 
 
-def final_door_code(presets_by_floor: Mapping[int, Mapping[str, Any]]) -> str:
-    """The 8-rune code of a team's final door: one rune per floor, from the presets it really played."""
-    return "".join(str(presets_by_floor[f]["fragment"]["rune"]) for f in range(1, TOTAL_FLOORS + 1))
+# ---- Phase 13: a game has N floors (3-8). Position 1..N is what players see and what the database
+# stores as ``floor_no``; the ORDER maps each position to one of the 8 internal floor definitions.
+MIN_FLOORS = 3
+DEFAULT_FLOOR_COUNT = TOTAL_FLOORS
+INTERNAL_FLOORS = tuple(range(1, TOTAL_FLOORS + 1))
+
+
+def generate_floor_order(count: int, rng: Any = None) -> list[int]:
+    """``count`` DISTINCT internal floors in a random order (OS entropy unless a test injects ``rng``).
+
+    Called ONCE, when the game is created, and stored. Nothing else ever reshuffles it."""
+    import random
+
+    if not MIN_FLOORS <= count <= TOTAL_FLOORS:
+        raise ValueError(f"a game has between {MIN_FLOORS} and {TOTAL_FLOORS} floors")
+    return (rng or random.SystemRandom()).sample(list(INTERNAL_FLOORS), count)
+
+
+def floor_order_of(game: Any) -> list[int]:
+    """The game's stored internal-floor sequence (validated; a legacy row falls back to 1..count)."""
+    count = int(getattr(game, "floor_count", None) or TOTAL_FLOORS)
+    order = getattr(game, "floor_order", None)
+    if (
+        isinstance(order, list) and len(order) == count
+        and all(isinstance(n, int) and not isinstance(n, bool) and 1 <= n <= TOTAL_FLOORS for n in order)
+        and len(set(order)) == count
+    ):
+        return list(order)
+    return list(range(1, count + 1))
+
+
+def internal_floor(game: Any, position: int) -> int:
+    """Internal floor definition used at player-facing position ``position`` (1-based)."""
+    order = floor_order_of(game)
+    if not 1 <= position <= len(order):
+        raise ValueError("no such floor in this game")
+    return order[position - 1]
+
+
+def player_fragment_id(position: int) -> str:
+    """Fragment id shown to players: derived from the POSITION, never from the internal floor."""
+    return f"fragment_{position}"
+
+
+def player_fragment_label(position: int) -> str:
+    return f"Floor {position} Key Fragment"
+
+
+def final_door_code(presets_by_position: Mapping[int, Mapping[str, Any]], count: int = TOTAL_FLOORS) -> str:
+    """The N-rune code of a team's final door: one rune per floor POSITION, from the presets it really played."""
+    return "".join(str(presets_by_position[p]["fragment"]["rune"]) for p in range(1, count + 1))
 
 
 def vault_chars_for(preset: Mapping[str, Any], obj: Mapping[str, Any]) -> dict[str, str]:

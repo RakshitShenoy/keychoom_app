@@ -75,7 +75,7 @@ def test_game_codes_are_unique(make_game):
         ({"min_teams": 2}, "min_teams"),
         ({"max_teams": 26}, "max_teams"),
         ({"min_teams": 10, "max_teams": 5}, "max_teams"),
-        ({"min_players_per_team": 2}, "min_players_per_team"),
+        ({"min_players_per_team": 0}, "min_players_per_team"),
         ({"max_players_per_team": 11}, "max_players_per_team"),
         ({"min_players_per_team": 8, "max_players_per_team": 5}, "max_players_per_team"),
         ({"base_duration_seconds": 10}, "base_duration_seconds"),

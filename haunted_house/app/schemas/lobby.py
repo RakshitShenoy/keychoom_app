@@ -103,6 +103,8 @@ class HostActionsOut(BaseModel):
 
 class LobbyResponse(BaseModel):
     game_code: str
+    floor_count: int = 8
+    host_plays: bool = False
     lobby_state: str  # WAITING | TEAM_FORMATION | READY_TO_START
     game_status: str
     team_formation_locked: bool

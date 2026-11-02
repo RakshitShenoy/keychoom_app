@@ -233,7 +233,7 @@ def start_game(db: Session, runtime: GameRuntime, game_id: str, now: datetime | 
                 409, "REQUIREMENTS_NOT_MET", "The game cannot start until every requirement is met.",
                 [{"code": p.code, "message": p.message} for p in data.readiness.problems],
             )
-        presets = pr.presets_for_floor(runtime.content, FIRST_FLOOR)
+        presets = pr.presets_for_floor(runtime.content, pr.internal_floor(game, FIRST_FLOOR))
         if not presets:
             raise AppError(503, "CONTENT_MISSING", "No room is available for Floor 1.")
         dealt = pr.assign_presets([p["id"] for p in presets], [t.id for t in data.teams], seed=f"{game.id}:floor{FIRST_FLOOR}")
@@ -493,14 +493,14 @@ def submit_vault(
         floor.completed_at = now
         ctx.team.floors_completed = max(ctx.team.floors_completed, floor.floor_no)
         runtime.leases.clear_team(ctx.team.id)
-        fragment = ctx.preset["fragment"]
+        fragment_label = pr.player_fragment_label(floor.floor_no)  # by POSITION: never the internal floor
         _record(db, ctx, E.VAULT_OPENED, {"display_name": player.display_name})
-        _record(db, ctx, E.FRAGMENT_AWARDED, {"fragment": fragment["label"]})
+        _record(db, ctx, E.FRAGMENT_AWARDED, {"fragment": fragment_label})
         _record(db, ctx, E.FLOOR_COMPLETED, {"floor": floor.floor_no})
         db.commit()
         _publish(runtime, ctx)
         return _response(db, runtime, ctx, player, {
-            "result": challenge.CORRECT, "message": f"The vault opens. You received the {fragment['label']}!"})
+            "result": challenge.CORRECT, "message": f"The vault opens. You received the {fragment_label}!"})
 
 
 # =====================================================================================
@@ -524,10 +524,10 @@ def advance_floor(db: Session, runtime: GameRuntime, player: Player, now: dateti
         floor = ctx.floor
         if floor.status != FloorStatus.COMPLETED.value or not floor.fragment_awarded:
             raise AppError(409, "FLOOR_NOT_COMPLETE", "Open this floor's vault before climbing higher.")
-        if floor.floor_no >= TOTAL_FLOORS:
+        if floor.floor_no >= ctx.game.floor_count:
             raise AppError(409, "NO_NEXT_FLOOR", "This is the top floor. Only the final door is left.")
-        target = floor.floor_no + 1
-        presets = pr.presets_for_floor(runtime.content, target)
+        target = floor.floor_no + 1  # the next POSITION; the game's stored order picks the room's floor
+        presets = pr.presets_for_floor(runtime.content, pr.internal_floor(ctx.game, target))
         if not presets:
             raise AppError(503, "CONTENT_MISSING", f"No room is available for Floor {target}.")
         team_ids = list(db.scalars(select(Team.id).where(Team.game_id == ctx.game.id)).all())
@@ -553,18 +553,21 @@ def advance_floor(db: Session, runtime: GameRuntime, player: Player, now: dateti
         return _response(db, runtime, ctx, player, {"result": "ENTERED", "floor": target, "message": f"Floor {target}: {title}"})
 
 
-def _collected_presets(runtime: GameRuntime, rows: dict[int, TeamFloorState]) -> dict[int, dict[str, Any]] | None:
-    """The preset of every floor 1..8 the team has COMPLETED with an awarded fragment (else None)."""
+def _collected_presets(
+    runtime: GameRuntime, rows: dict[int, TeamFloorState], game: Game
+) -> dict[int, dict[str, Any]] | None:
+    """The preset of every floor POSITION 1..N the team has COMPLETED with an awarded fragment (else None).
+    Each room must be the one the game's stored order assigns to that position."""
     out: dict[int, dict[str, Any]] = {}
-    for floor in range(1, TOTAL_FLOORS + 1):
-        row = rows.get(floor)
+    for position in range(1, game.floor_count + 1):
+        row = rows.get(position)
         if row is None or row.status != FloorStatus.COMPLETED.value or not row.fragment_awarded:
             return None
         preset = runtime.content.presets.get(row.preset_id)
-        if preset is None or preset["floor"] != floor:
+        if preset is None or preset["floor"] != pr.internal_floor(game, position):
             return None
-        out[floor] = preset
-    if len({p["fragment"]["id"] for p in out.values()}) != TOTAL_FLOORS:
+        out[position] = preset
+    if len({p["fragment"]["id"] for p in out.values()}) != game.floor_count:
         return None
     return out
 
@@ -572,23 +575,24 @@ def _collected_presets(runtime: GameRuntime, rows: dict[int, TeamFloorState]) ->
 def open_final_door(
     db: Session, runtime: GameRuntime, player: Player, code: str, now: datetime | None = None
 ) -> dict[str, Any]:
-    """The first team to open the final door wins. The door needs ALL 8 awarded fragments (read from the
-    database, never from the browser) and the 8-rune code they spell. The winner is decided under a
+    """The first team to open the final door wins. The door needs ALL of the game's awarded fragments (read from
+    the database, never from the browser) and the N-rune code they spell (N = the game's floor count). The winner is decided under a
     per-game lock, so two teams reaching the door at the same instant produce exactly one winner."""
     team_id = _team_id(player)
     with runtime.team_lock(team_id):
         now = now or utcnow()
         ctx = _load(db, runtime, player, now)
         _ensure_playable(db, runtime, ctx)
-        presets = _collected_presets(runtime, _team_floor_rows(db, ctx.team.id))
+        count = ctx.game.floor_count
+        presets = _collected_presets(runtime, _team_floor_rows(db, ctx.team.id), ctx.game)
         if presets is None:
-            raise AppError(409, "FINAL_DOOR_LOCKED", "The final door needs the key fragments of all 8 floors.")
+            raise AppError(409, "FINAL_DOOR_LOCKED", f"The final door needs the key fragments of all {count} floors.")
         _check_cooldown(runtime, ctx, FINAL_DOOR_ID)
         guess = challenge.normalize_code(code if isinstance(code, str) else "")
-        expected = pr.final_door_code(presets)
-        if len(guess) != TOTAL_FLOORS:
+        expected = pr.final_door_code(presets, count)
+        if len(guess) != count:
             return _response(db, runtime, ctx, player, {
-                "result": challenge.INVALID, "message": f"The final door takes {TOTAL_FLOORS} runes."})
+                "result": challenge.INVALID, "message": f"The final door takes {count} runes."})
         if guess != expected:
             runtime.start_cooldown(ctx.team.id, FINAL_DOOR_ID, now)
             _record(db, ctx, E.ANSWER_WRONG, {"object_id": FINAL_DOOR_ID, "display_name": player.display_name, "attempts": 1})

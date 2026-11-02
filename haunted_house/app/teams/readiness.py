@@ -46,6 +46,15 @@ class Readiness:
     problems: tuple[Problem, ...]
 
 
+def _too_small_message(team: TeamSnapshot, rules: TeamRules) -> str:
+    if rules.min_players <= 1:
+        return f"{team.name} has no players. Every team must have at least 1 player."
+    return (
+        f"{team.name} has {team.player_count} players; at least {rules.min_players} needed. "
+        f"Every team must have at least {rules.min_players} players."
+    )
+
+
 def team_status(team: TeamSnapshot, rules: TeamRules) -> TeamReadiness:
     if not team.has_leader:
         return TeamReadiness.WAITING_FOR_LEADER
@@ -79,7 +88,7 @@ def evaluate_readiness(
             problems.append(
                 Problem(
                     "TEAM_TOO_SMALL",
-                    f"{team.name} has {team.player_count} players; at least {rules.min_players} needed.",
+                    _too_small_message(team, rules),
                     team.team_id,
                 )
             )

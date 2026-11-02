@@ -11,8 +11,10 @@ from sqlalchemy.orm import Session
 
 from app.auth.dependencies import require_host_of_game, require_player_of_game
 from app.db.models import Game, Player
+from app.errors import AppError
 from app.db.session import get_db
 from app.game import service
+from app.auth.hostplay import host_is_playing, host_player
 from app.game.views import build_host_dashboard
 from app.lobby.views import Viewer, build_lobby_view
 from app.schemas.lobby import LobbyResponse
@@ -62,6 +64,8 @@ def start_game(
     request: Request, game: Game = Depends(require_host_of_game), db: Session = Depends(get_db)
 ) -> LobbyResponse:
     game = service.start_game(db, _runtime(request), game.id)
+    if host_is_playing(db, game):  # a playing host gets the same view as any other player
+        return build_lobby_view(db, request.app.state.settings, Viewer("player", game, host_player(db, game)))
     return build_lobby_view(db, request.app.state.settings, Viewer("host", game))
 
 
@@ -165,6 +169,8 @@ def pause(
     game: Game = Depends(require_host_of_game), db: Session = Depends(get_db),
 ) -> dict[str, Any]:
     game = service.pause_game(db, _runtime(request), game.id)
+    if host_is_playing(db, game):  # the host's own screen is the player screen: no whole-game data
+        return {"paused": game.paused_at is not None}
     return build_host_dashboard(db, _runtime(request), game)
 
 
@@ -174,6 +180,8 @@ def resume(
     game: Game = Depends(require_host_of_game), db: Session = Depends(get_db),
 ) -> dict[str, Any]:
     game = service.resume_game(db, _runtime(request), game.id)
+    if host_is_playing(db, game):
+        return {"paused": game.paused_at is not None}
     return build_host_dashboard(db, _runtime(request), game)
 
 
@@ -181,4 +189,6 @@ def resume(
 def host_dashboard(
     request: Request, game: Game = Depends(require_host_of_game), db: Session = Depends(get_db),
 ) -> dict[str, Any]:
+    if host_is_playing(db, game):
+        raise AppError(403, "HOST_IS_PLAYING", "You are playing in this game, so the host dashboard is closed.")
     return build_host_dashboard(db, _runtime(request), game)

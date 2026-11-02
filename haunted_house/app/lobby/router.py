@@ -39,6 +39,8 @@ def create_game_endpoint(
         host_session_established=True,
         host_session_expires_at=game.host_session_expires_at,
         team_count=game.team_count,
+        floor_count=game.floor_count,
+        host_plays=bool(game.host_plays),
         config=game_config_out(game),
     )
 

@@ -86,7 +86,7 @@ Settings that contradict each other stop the server from starting.
 ## Database migrations
 
 ```bash
-alembic upgrade head      # apply all migrations (0001 schema, 0002 teams, 0003 host pause)
+alembic upgrade head      # apply all migrations (0001 schema, 0002 teams, 0003 host pause, 0004 floor plan + host play)
 alembic current           # show the applied revision
 alembic downgrade -1      # step back one revision (development only)
 ```
@@ -115,7 +115,40 @@ python tools/multiplayer_check.py --base https://YOUR-APP.replit.app --teams 5 -
 ```
 Exit code 0 means everything passed; any 5xx, dropped WebSocket or wrong state is listed. **Run this against your
 deployed URL before the event**; it is the quickest way to see a proxy problem such as a 502.
-(`--teams 3 --per-team 1` needs the server started with `MIN_PLAYERS_LIMIT=1`; the game normally requires 3.)
+(`--teams 3 --per-team 1` is the smallest valid game: 3 teams with 1 player each.)
+
+## Phase 12: the official minimum game
+
+* Smallest valid game: **3 teams x 1 player = 3 players**. Limits: 3-25 teams, 1-10 players per team.
+* Every team needs a leader and at least 1 player. A one-player team is valid (its only member is the leader).
+  An empty team blocks both *lock formation* and *start game*; the host sees "Every team must have at least 1 player."
+* The host form no longer asks for a minimum: it is derived (`teams x 1`) and shown as a rule. The API field
+  `min_players_per_team` is still accepted (stricter games remain possible) and defaults to `MIN_PLAYERS_LIMIT=1`.
+* `start_game` re-checks readiness on the server, so a forced `READY` status cannot start a game with an empty team.
+* No database migration: the schema already allowed `min_players_per_team >= 1`.
+
+## Phase 13: floor count, hidden floor order, host plays
+
+* **Floor count.** The host picks 3-8 floors (default 8) when creating the game. It is validated on the server
+  (`422 INVALID_GAME_CONFIG`, field `floor_count`), stored in `games.floor_count` and cannot be changed afterwards
+  (there is no endpoint for it; the create request rejects unknown fields).
+* **Hidden random order.** When a game is created the server draws `floor_count` DISTINCT internal floors
+  (1-8) in random order with OS entropy (`random.SystemRandom`) and stores them once in `games.floor_order`.
+  Nothing reshuffles it: refresh, reconnect, restart and dashboard views only read it.
+* **Positions vs. internal floors.** Everything players see and everything stored per team (`floor_no`,
+  `teams.current_floor`, fragments, hints, runes) uses the POSITION 1..N. Only the room lookup maps a position
+  to an internal floor (`app/game/presets.py: internal_floor`). Fragment ids/labels shown to players are built
+  from the position ("Floor 3 Key Fragment"). The order appears only in the host dashboard (`floor_plan`).
+* **Final door.** Needs the N awarded fragments of this game and the N-rune code, runes ordered by position.
+* **Host plays.** With `host_plays=true` the host creates their own player through `POST /api/games/{code}/host/play`
+  (same name, capacity and team-code rules as everybody; nobody is auto-assigned to a team). The host session stays
+  valid on the server. While the game runs, the host session is refused on the dashboard, the host lobby view,
+  `/api/host/game` and the host WebSocket (`403 HOST_IS_PLAYING`); the host plays through the player session.
+  Pause/resume remain host powers and return only `{"paused": ...}` to a playing host.
+* **Migration `0004`** adds `games.floor_count`, `games.floor_order`, `games.host_plays`, `players.is_host_player`
+  (existing games become 8-floor, original order, host only). No Render configuration change is needed.
+* **Tests.** `tests/test_phase13_floors.py` uses the real shuffle (`@pytest.mark.random_floors`); every other
+  module pins the order to 1..N through an autouse fixture so room-specific assertions stay valid.
 
 ## Replit deployment
 

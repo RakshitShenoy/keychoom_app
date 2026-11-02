@@ -9,7 +9,8 @@ time. It reports every HTTP status it saw, so a 502/5xx or a dropped WebSocket s
 the exact request. Exit code 0 = everything passed.
 
 Needs: pip install httpx websockets   (both are already installed with requirements-dev.txt)
-Floor 1 has a single fixed room, which is why its answers are known here.
+Since Phase 13 every game has its own hidden floor order, so the room a team stands in is read from its
+state and solved with the answers from the repository's content files (run this tool from a checkout).
 """
 from __future__ import annotations
 
@@ -23,8 +24,30 @@ from collections import Counter
 import httpx
 import websockets
 
-FLOOR1 = [("candle", "3"), ("painting", "maid"), ("vent", "34")]
-VAULT = "K7R4"
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent.parent))
+from app.config import APP_DIR  # noqa: E402
+from app.content.loader import load_and_validate  # noqa: E402
+from app.engines import challenge as _challenge  # noqa: E402
+from app.game.presets import validate_building, validate_game_content  # noqa: E402
+
+LIBRARY = load_and_validate(APP_DIR / "content", extra_validators=[validate_game_content, validate_building])
+
+
+def preset_for(state: dict) -> dict:
+    title = state["room"]["title"]
+    return next(p for p in LIBRARY.presets.values() if p["title"] == title)
+
+
+def required_in_order(preset: dict) -> list[dict]:
+    """Puzzle/quiz objects with every prerequisite first."""
+    todo = [o for o in preset["objects"] if o["type"] in ("puzzle", "quiz")]
+    done, order = set(), []
+    while len(order) < len(todo):
+        for obj in todo:
+            if obj["id"] not in done and set(obj.get("requires", [])) <= done:
+                done.add(obj["id"])
+                order.append(obj)
+    return order
 
 
 class Report:
@@ -125,8 +148,8 @@ async def main() -> int:
 
     host = Client(args.base, "host", report)
     r = await host.call("POST", "/api/games", {
-        "team_count": args.teams, "min_players_per_team": min(3, args.per_team),
-        "max_players_per_team": max(3, args.per_team), "base_duration_seconds": args.minutes * 60})
+        "team_count": args.teams, "min_players_per_team": 1,
+        "max_players_per_team": max(1, args.per_team), "base_duration_seconds": args.minutes * 60})
     if r.status_code != 201:
         print("could not create a game:", r.status_code, r.text[:300])
         return 1
@@ -163,18 +186,33 @@ async def main() -> int:
     print(f"  [{time.monotonic() - t0:5.1f}s] game started")
     states = await asyncio.gather(*[p.call("GET", f"/api/games/{code}/play/state") for p in players])
     report.check(all(s.status_code == 200 and s.json()["state"]["room"]["floor"] == 1 for s in states), "every player is on Floor 1")
-    report.check(all("K7R4" not in s.text for s in states), "no player state contains the vault code")
+    report.check(all(preset_for(s.json()["state"])["vault"]["code"] not in s.text for s in states), "no player state contains the vault code")
     dash = await host.wait_for(lambda m: m["type"] == "HOST_DASHBOARD")
     report.check(dash is not None and len(dash["payload"]["teams"]) == args.teams, "host received the live dashboard over the WebSocket")
     report.check(all(not p.got("HOST_DASHBOARD") for p in players), "no player received the host dashboard")
 
     async def solve_floor1(group: list[Client]) -> None:
-        a, b, c = group[0], group[1 % len(group)], group[2 % len(group)]
-        for owner, (obj, answer) in zip((a, b, c), FLOOR1):
-            await owner.call("POST", f"/api/games/{code}/play/objects/{obj}/investigate")
-            r = await owner.call("POST", f"/api/games/{code}/play/objects/{obj}/answer", {"answer": answer})
-            report.check(r.status_code == 200 and r.json()["result"]["result"] == "CORRECT", f"{owner.name} solved {obj}")
-        r = await a.call("POST", f"/api/games/{code}/play/vault", {"code": VAULT})
+        state = (await group[0].call("GET", f"/api/games/{code}/play/state")).json()["state"]
+        preset = preset_for(state)  # whichever room this game's hidden order put at Floor 1
+        for i, obj in enumerate(required_in_order(preset)):
+            owner, oid = group[i % len(group)], obj["id"]
+            await owner.call("POST", f"/api/games/{code}/play/objects/{oid}/investigate")
+            if obj["type"] == "puzzle":
+                steps = _challenge.steps_of(LIBRARY.puzzles[obj["puzzle"]])
+                for step in steps:
+                    r = await owner.call("POST", f"/api/games/{code}/play/objects/{oid}/answer", {"answer": str(step["answer"])})
+                ok = r.status_code == 200 and r.json()["result"]["result"] == "CORRECT"
+            else:
+                pool = {q["id"]: q["answer"] for q in LIBRARY.quizzes[obj["quiz"]["pool"]]["questions"]}
+                await owner.call("POST", f"/api/games/{code}/play/objects/{oid}/quiz/start")
+                for _ in range(obj["quiz"]["questions"]):
+                    st = (await owner.call("GET", f"/api/games/{code}/play/state")).json()["state"]
+                    qid = st["my_investigation"]["quiz"]["question"]["question_id"]
+                    r = await owner.call("POST", f"/api/games/{code}/play/objects/{oid}/quiz/answer", {"question_id": qid, "choice": pool[qid]})
+                ok = r.status_code == 200 and r.json()["result"]["result"] == "FINISHED" and r.json()["result"]["passed"]
+            report.check(ok, f"{owner.name} solved {oid}")
+        a, b = group[0], group[1 % len(group)]
+        r = await a.call("POST", f"/api/games/{code}/play/vault", {"code": preset["vault"]["code"]})
         report.check(r.status_code == 200 and r.json()["result"]["result"] == "CORRECT", "vault opened")
         await b.call("POST", f"/api/games/{code}/play/floor/next")
 

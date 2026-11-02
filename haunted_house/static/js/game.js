@@ -422,9 +422,9 @@
     const runes = fd.runes.map(function (r) { return el("span", { class: "hh-rune" + (r ? " got" : ""), text: r || "?" }); });
     const kids = [el("h2", { text: "The Final Door" }), el("div", { class: "hh-runes", "aria-label": "Runes from your fragments" }, runes)];
     if (fd.status === "AVAILABLE") {
-      kids.push(el("p", { class: "hh-prompt", text: "All eight fragments hum together. Enter the eight runes in floor order to open the final door." }));
+      kids.push(el("p", { class: "hh-prompt", text: "All " + total + " fragments hum together. Enter the " + total + " runes in floor order to open the final door." }));
       kids.push(el("div", { class: "hh-answer" + (badNow() ? " bad" : "") }, [
-        el("input", { id: "gm-door", value: draft.door, placeholder: "8 runes", maxlength: "16", autocomplete: "off", autocapitalize: "characters", "aria-label": "Final door runes",
+        el("input", { id: "gm-door", value: draft.door, placeholder: total + " runes", maxlength: "16", autocomplete: "off", autocapitalize: "characters", "aria-label": "Final door runes",
           oninput: function (e) { draft.door = e.target.value; }, onkeydown: function (e) { if (e.key === "Enter") { submitDoor(); } } }),
         el("button", { type: "button", id: "gm-door-btn", text: "Unlock the door", onclick: submitDoor })
       ]));

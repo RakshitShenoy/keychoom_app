@@ -139,19 +139,20 @@ def build_floor_state(
         ).all()
     }
     fragments = []
-    for n in range(1, pr.TOTAL_FLOORS + 1):
+    total_floors = game.floor_count
+    for n in range(1, total_floors + 1):
         row = floor_rows.get(n)
         got = bool(row and row.fragment_awarded)
         frag_preset = runtime.content.presets.get(row.preset_id) if (row and got) else None
         fragments.append({
             "floor": n, "collected": got,
-            "label": frag_preset["fragment"]["label"] if frag_preset else None,
+            "label": pr.player_fragment_label(n) if frag_preset else None,
             "rune": frag_preset["fragment"].get("rune") if frag_preset else None,  # unknown until collected
         })
     all_collected = all(f["collected"] for f in fragments)
     winner_team = db.get(Team, game.winner_team_id, populate_existing=True) if game.winner_team_id else None
     state["game"] = {
-        "status": game.status, "paused": paused, "total_floors": pr.TOTAL_FLOORS, "ended_at": _iso(game.ended_at),
+        "status": game.status, "paused": paused, "total_floors": total_floors, "ended_at": _iso(game.ended_at),
         "winner": {
             "team_name": winner_team.name or f"Team {winner_team.slot_no}",
             "is_my_team": winner_team.id == team.id,
@@ -161,7 +162,7 @@ def build_floor_state(
     state["final_door"] = {
         "status": "OPENED" if team.status == TeamStatus.ESCAPED.value else (
             "AVAILABLE" if (all_collected and game.status == GameStatus.RUNNING.value and not expired and not paused) else "LOCKED"),
-        "length": pr.TOTAL_FLOORS,
+        "length": total_floors,
         "collected": sum(1 for f in fragments if f["collected"]),
         "runes": [f["rune"] for f in fragments],
     }
@@ -214,11 +215,11 @@ def build_floor_state(
         entry["investigating_id"] = held.object_id if held else None
     required = [o for o in preset["objects"] if not pr.is_optional(o)]
     state["progress"] = {
-        "floor": floor.floor_no, "floors_completed": team.floors_completed, "total_floors": pr.TOTAL_FLOORS,
+        "floor": floor.floor_no, "floors_completed": team.floors_completed, "total_floors": total_floors,
         "required_total": len(required), "required_solved": sum(1 for o in required if o["id"] in solved),
     }
     state["can_advance"] = bool(
-        completed and floor.floor_no < pr.TOTAL_FLOORS and team.status == TeamStatus.PLAYING.value
+        completed and floor.floor_no < total_floors and team.status == TeamStatus.PLAYING.value
         and game.status == GameStatus.RUNNING.value and not expired and not paused
     )
     vault_def = preset["vault"]
@@ -247,7 +248,7 @@ def build_floor_state(
             for o in preset["objects"] if o["id"] in solved
         ],
         "fragment": {
-            "id": preset["fragment"]["id"], "label": preset["fragment"]["label"],
+            "id": pr.player_fragment_id(floor.floor_no), "label": pr.player_fragment_label(floor.floor_no),
             "awarded": bool(floor.fragment_awarded),
         },
     }
@@ -397,7 +398,7 @@ def build_host_dashboard(db: Session, runtime: GameRuntime, game: Game, now: dat
                 {"object_id": l.object_id, "label": labels.get(l.object_id, l.object_id), "player": names.get(l.player_id)}
                 for l in leases if l.object_id in labels
             ]
-        fragments = [bool(floor_rows[t.id].get(n) and floor_rows[t.id][n].fragment_awarded) for n in range(1, pr.TOTAL_FLOORS + 1)]
+        fragments = [bool(floor_rows[t.id].get(n) and floor_rows[t.id][n].fragment_awarded) for n in range(1, game.floor_count + 1)]
         all_frags = all(fragments)
         if status == TeamStatus.ESCAPED.value:
             where = f"Floor {t.current_floor} -> escaped through the final door"
@@ -405,7 +406,7 @@ def build_host_dashboard(db: Session, runtime: GameRuntime, game: Game, now: dat
             where = f"Floor {t.current_floor} -> out of time"
         elif room is None:
             where = f"Floor {t.current_floor}"
-        elif all_frags and t.current_floor == pr.TOTAL_FLOORS and floor.status == FloorStatus.COMPLETED.value:
+        elif all_frags and t.current_floor == game.floor_count and floor.status == FloorStatus.COMPLETED.value:
             where = f"Floor {t.current_floor} -> {room['title']} -> at the final door"
         elif floor.status == FloorStatus.COMPLETED.value:
             where = f"Floor {t.current_floor} -> {room['title']} -> ready to climb"
@@ -455,7 +456,11 @@ def build_host_dashboard(db: Session, runtime: GameRuntime, game: Game, now: dat
         "game_status": game.status, "paused": paused, "paused_at": _iso(game.paused_at),
         "paused_seconds_total": paused_total,
         "server_now": _iso(real_now), "started_at": _iso(game.started_at), "ended_at": _iso(game.ended_at),
-        "base_duration_seconds": game.base_duration_seconds, "total_floors": pr.TOTAL_FLOORS,
+        "base_duration_seconds": game.base_duration_seconds, "total_floors": game.floor_count,
+        # HOST-ONLY administration info: which internal floor definition sits at each position.
+        # Never part of any player state.
+        "floor_plan": [{"position": i + 1, "internal_floor": f} for i, f in enumerate(pr.floor_order_of(game))],
+        "host_plays": bool(game.host_plays),
         "players": {"total": len(players), "connected": sum(1 for p in players if p.is_connected)},
         "winner": winner, "teams": rows, "feed": feed,
     }

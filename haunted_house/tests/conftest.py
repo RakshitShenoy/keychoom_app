@@ -7,6 +7,18 @@ from app.db.base import Base
 from app.main import create_app
 
 
+@pytest.fixture(autouse=True)
+def _pin_floor_order(request, monkeypatch):
+    """Phase 13 draws a random floor order per game. The Phase 1-12 tests assert things about a specific
+    room (for example Floor 1 = the candle cellar), so unless a module is marked ``random_floors`` the
+    order is pinned to 1..N. Production code is untouched: only the ORDER GENERATOR is replaced here."""
+    if request.node.get_closest_marker("random_floors"):
+        return
+    import app.game.presets as presets
+
+    monkeypatch.setattr(presets, "generate_floor_order", lambda count, rng=None: list(range(1, count + 1)))
+
+
 @pytest.fixture
 def settings(tmp_path):
     return Settings(

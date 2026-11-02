@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import CheckConstraint, Integer, String
+from sqlalchemy import JSON, Boolean, CheckConstraint, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -35,6 +35,13 @@ class Game(Base):
 
     # Phase 2: the exact number of team slots the host wants (min_teams <= team_count <= max_teams).
     team_count: Mapped[int] = mapped_column(Integer)
+
+    # Phase 13: how many floors this game has (3-8) and WHICH internal floors, in which order. The
+    # order is drawn once, server-side, when the game is created; players only ever see positions 1..N.
+    floor_count: Mapped[int] = mapped_column(Integer, default=8, server_default="8")
+    floor_order: Mapped[list[int]] = mapped_column(JSON, default=list)
+    # Phase 13: the host also plays (as an ordinary player) once the game starts.
+    host_plays: Mapped[bool] = mapped_column(Boolean, default=False, server_default="0")
 
     created_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow)
     started_at: Mapped[datetime | None] = mapped_column(UTCDateTime, nullable=True)
@@ -70,5 +77,6 @@ class Game(Base):
         CheckConstraint(
             "team_count >= min_teams AND team_count <= max_teams", name="team_count_bounds"
         ),
+        CheckConstraint("floor_count >= 3 AND floor_count <= 8", name="floor_count_range"),
         CheckConstraint("paused_seconds_total >= 0", name="paused_total_nonnegative"),
     )

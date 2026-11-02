@@ -15,6 +15,7 @@ from typing import TYPE_CHECKING, Any, Mapping
 from sqlalchemy import update
 
 from app.auth.dependencies import identify_viewer
+from app.auth.hostplay import host_is_playing
 from app.db.models import Game, Player
 from app.lobby.chat import recent_messages
 from app.lobby.events import LobbyEvent, LobbyEventBus, LobbyEventType
@@ -176,6 +177,21 @@ class RealtimeHub:
             self.push_snapshots(game_id)
         except Exception:  # never let a push failure kill the timer thread silently
             log.exception("snapshot push failed for game %s", game_id)
+
+    def _evict_playing_host(self, game_id: str) -> None:
+        """Phase 13: when the game starts and the host plays, their host-role sockets are closed so no
+        dashboard data can reach them; they reconnect through their PLAYER session."""
+        db = self.session_factory()
+        try:
+            game = db.get(Game, game_id, populate_existing=True)
+            playing = game is not None and host_is_playing(db, game)
+        finally:
+            db.close()
+        if playing:
+            self.manager.close_role(
+                game_id, "host", CLOSE_FORBIDDEN,
+                error_message("HOST_IS_PLAYING", "You are playing in this game now. Use the player screen."),
+            )
 
     # ------------------------------------------------------------------ bus -> sockets
     def on_event(self, event: LobbyEvent) -> None:
@@ -342,6 +358,9 @@ class RealtimeHub:
             self._schedule_snapshot(game_id)
             self._schedule_dashboard(game_id)  # presence, pause, winner... all arrive as "state changed"
             return
+
+        if event.type is LobbyEventType.GAME_STARTED:
+            self._evict_playing_host(game_id)  # BEFORE anything is sent to host sockets
 
         name = event.type.value
         # Hosts get the full payload; players get it without row ids.

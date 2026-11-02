@@ -10,7 +10,7 @@ def make(**overrides):
 def test_defaults_match_the_design():
     s = make()
     assert (s.min_teams_limit, s.max_teams_limit) == (3, 25)
-    assert (s.min_players_limit, s.max_players_limit) == (3, 10)
+    assert (s.min_players_limit, s.max_players_limit) == (1, 10)
     assert s.max_hints == 4
     assert s.hint_penalty_schedule == (30, 60, 90, 120)
     assert s.object_lock_lease_seconds > 0

@@ -124,6 +124,11 @@ class ConnectionManager:
     def send_player(self, game_id: str, player_id: str, message: dict[str, Any]) -> int:
         return sum(c.send(message) for c in self.connections(game_id) if c.player_id == player_id)
 
+    def close_role(
+        self, game_id: str, role: str, code: int, error: dict[str, Any] | None = None
+    ) -> int:
+        return sum(c.close(code, error) for c in self.connections(game_id) if c.role == role)
+
     def close_player(
         self, game_id: str, player_id: str, code: int, error: dict[str, Any] | None = None
     ) -> int:

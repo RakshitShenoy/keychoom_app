@@ -160,11 +160,12 @@ def solve_floor(players, library, climb=True):
     climb to the next floor. Returns the preset that was played."""
     state = players[0].state()
     preset = preset_by_title(library, state["room"]["title"])
+    position, total = state["room"]["floor"], state["game"]["total_floors"]
     for i, obj in enumerate(topo_order(preset)):
         solve_object(players[i % len(players)], obj, library)
     response = players[0].vault(preset["vault"]["code"])
     assert response.status_code == 200 and response.json()["result"]["result"] == "CORRECT", response.text
-    if climb and preset["floor"] < 8:
+    if climb and position < total:  # positions, not internal floors: the game may have 3-8 floors
         response = players[1 % len(players)].call("POST", "/floor/next")
         assert response.status_code == 200, response.text
     return preset
@@ -179,9 +180,11 @@ def climb_to_floor(players, library, target):
 
 
 def play_whole_building(players, library):
-    played = [solve_floor(players, library, climb=True) for _ in range(8)]
-    return {p["floor"]: p for p in played}
+    """Climb every floor of THIS game (3-8). Returns {player-facing position: preset that was played}."""
+    total = players[0].state()["game"]["total_floors"]
+    played = [solve_floor(players, library, climb=True) for _ in range(total)]
+    return {position: preset for position, preset in enumerate(played, start=1)}
 
 
-def final_code(presets_by_floor):
-    return final_door_code(presets_by_floor)
+def final_code(presets_by_position):
+    return final_door_code(presets_by_position, len(presets_by_position))

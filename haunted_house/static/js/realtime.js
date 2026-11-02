@@ -5,7 +5,7 @@
 (function () {
   const HH = window.HH;
 
-  const FATAL = { NOT_AUTHENTICATED: true, NOT_AUTHORIZED: true, KICKED: true };
+  const FATAL = { NOT_AUTHENTICATED: true, NOT_AUTHORIZED: true, KICKED: true, HOST_IS_PLAYING: true };
   const BASE_DELAY_MS = 1000;
   const MAX_DELAY_MS = 15000;
   const MAX_ATTEMPTS = 12;       // then stop and let the user retry (no endless hammering)

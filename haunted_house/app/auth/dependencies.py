@@ -3,6 +3,7 @@ from __future__ import annotations
 from fastapi import Depends, Request
 from sqlalchemy.orm import Session
 
+from app.auth.hostplay import host_is_playing
 from app.auth.sessions import resolve_host_game, resolve_player
 from app.db.models import Game, Player
 from app.db.session import get_db
@@ -93,7 +94,8 @@ def identify_viewer(
     host_game = resolve_host_game(db, settings, cookies.get(settings.host_cookie_name))
     player = resolve_player(db, settings, cookies.get(settings.player_cookie_name))
     if role != "player" and host_game is not None and host_game.game_code == code:
-        return LobbyViewer("host", host_game)
+        if not host_is_playing(db, host_game):  # a playing host only ever gets the PLAYER view
+            return LobbyViewer("host", host_game)
     if role != "host" and player is not None and player.game.game_code == code:
         return LobbyViewer("player", player.game, player)
     if host_game is not None or player is not None:
